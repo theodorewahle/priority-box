@@ -5,9 +5,10 @@ import NativeTachyons, { styles as s } from 'react-native-style-tachyons';
 
 import AppNavigator from './navigation/AppNavigator';
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import { store } from './store';
 import Colors from './constants/Colors';
 import Layout from './constants/Layout';
+import firebase from 'firebase';
 
 NativeTachyons.build(
   {
@@ -34,6 +35,18 @@ export default class App extends React.Component {
     isLoadingComplete: false
   };
 
+  componentWillMount() {
+    var config = {
+      apiKey: 'AIzaSyD87u_a_jfREY6a1nlQkFMAJLnDiy36N7M',
+      authDomain: 'priority-box.firebaseapp.com',
+      databaseURL: 'https://priority-box.firebaseio.com',
+      projectId: 'priority-box',
+      storageBucket: 'priority-box.appspot.com',
+      messagingSenderId: '516596155450'
+    };
+    firebase.initializeApp(config);
+  }
+
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
@@ -58,14 +71,15 @@ export default class App extends React.Component {
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([require('./assets/images/robot-dev.png'), require('./assets/images/robot-prod.png')]),
-      Font.loadAsync({
+      await Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
+        // We include SpaceMono because we use it in Home.js. Feel free
         // to remove this if you are not using it in your app
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf')
       })
     ]);
+    this._handleFinishLoading();
   };
 
   _handleLoadingError = error => {

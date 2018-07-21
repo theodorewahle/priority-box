@@ -2,13 +2,26 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import Home from '../screens/Home';
+import Decisions from '../screens/Decisions';
 import SettingsScreen from '../screens/SettingsScreen';
+import PriorityForm from '../screens/PriorityForm';
+import SignIn from '../screens/SignIn';
+
 import TabBarIcon from '../components/TabBarIcon';
 
+const headerStyle = {
+  marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+};
+
+export const AuthStack = createStackNavigator({
+  SignUp,
+  SignIn
+});
+
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Home,
+  PriorityForm
 });
 
 HomeStack.navigationOptions = {
@@ -17,30 +30,28 @@ HomeStack.navigationOptions = {
     <TabBarIcon
       focused={focused}
       name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+        Platform.OS === 'ios' ? `ios-information-circle${focused ? '' : '-outline'}` : 'md-information-circle'
       }
     />
-  ),
+  )
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const DecisionsStack = createStackNavigator({
+  Decisions
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+DecisionsStack.navigationOptions = {
+  tabBarLabel: 'Decisions',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
     />
-  ),
+  )
 };
 
 const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+  Settings: SettingsScreen
 });
 
 SettingsStack.navigationOptions = {
@@ -50,11 +61,11 @@ SettingsStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
     />
-  ),
+  )
 };
 
 export default createBottomTabNavigator({
   HomeStack,
-  LinksStack,
-  SettingsStack,
+  DecisionsStack,
+  SettingsStack
 });
