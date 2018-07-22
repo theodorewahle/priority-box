@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { Card, CardSection } from '../components/common';
 import { Header, Button, Icon } from 'react-native-elements';
 import { getPriorities } from '../redux/priorities/Api';
+import PriorityCard from '../components/PriorityCard';
 
 import { styles as s } from 'react-native-style-tachyons';
 
@@ -53,13 +54,7 @@ class Home extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           {Object.keys(this.props.priorities).map((key, i) => (
-            <Card key={i}>
-              <CardSection color="blue" style={[s.jcsb]}>
-                <View>
-                  <Text style={[s.f2, s.white, s.pr2]}>{this.props.priorities[key].text}</Text>
-                </View>
-              </CardSection>
-            </Card>
+            <PriorityCard priority={this.props.priorities[key]} key={i} />
           ))}
         </ScrollView>
       </View>
