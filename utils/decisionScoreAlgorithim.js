@@ -7,7 +7,8 @@ const CalculateDecisionScore = (sliderValues, priorities) => {
   let totalScore = 0;
 
   const completeValues = {};
-  priorityKeys.map(priority => {
+  priorityKeys.map(priorityKey => {
+    const priority = priorities[priorityKey];
     if (sliderValues[priority.rank]) {
       completeValues[priority.rank] = sliderValues[priority.rank].value;
     } else {
@@ -15,10 +16,10 @@ const CalculateDecisionScore = (sliderValues, priorities) => {
     }
   });
 
-  Object.keys(completeValues).map(valueKey => {
-    const sliderScore = completeValues[valueKey];
-    const weightedScore = sliderScore * 2 ** (POWER - valueKey); //if POWER is 7, this is 2**6, 2**5, etc...
-    totalScore += weightedScore; // 0 + 55, 23
+  Object.keys(completeValues).map(rankKey => {
+    const sliderScore = completeValues[rankKey];
+    const weightedScore = sliderScore * Math.pow(2, POWER - rankKey); //if POWER is 7, this is 2**6, 2**5, etc...
+    totalScore = totalScore + weightedScore;
   });
   const finalWeightedScore = totalScore / DENOMINATOR;
   return finalWeightedScore;
