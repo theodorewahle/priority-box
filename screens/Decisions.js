@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, ListView, StyleSheet, Modal } from 'react-native';
+import { View, ScrollView, ListView, StyleSheet, Modal } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, Icon, Button } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';

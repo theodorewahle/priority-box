@@ -9,18 +9,15 @@ import { postDecision } from '../redux/decisions/Api';
 class DecisionFormCard extends Component {
   state = {
     value: 0.5,
-    priorityColors: {
-      '1': {
-        r: 127,
-        g: 127,
-        value: 0.5
-      }
-    }
+    priorityColors: {}
   };
 
-  handleSubmit() {
-    return null;
-  }
+  handleSubmit = sliderValues => {
+    const { priorities } = this.props;
+    console.log(priorities);
+    console.log(sliderValues);
+    //CalculateDecisionScore(sliderValues)
+  };
 
   sliderMove = (value, id) => {
     const r = 255 - value * 255;
@@ -34,9 +31,8 @@ class DecisionFormCard extends Component {
     if (priorityColors[id]) {
       if (priorityColors[id].r < 145 && priorityColors[id].g < 145) {
         return 'grey';
-      } else {
-        return `rgb(${priorityColors[id].r}, ${priorityColors[id].g}, 0)`;
       }
+      return `rgb(${priorityColors[id].r}, ${priorityColors[id].g}, 0)`;
     }
     return 'grey';
   };
@@ -65,7 +61,6 @@ class DecisionFormCard extends Component {
               }}>
               <Text style={[s.white]}>{priority.text}</Text>
               <Slider
-                style={{ color: 'white' }}
                 animationType="timing"
                 thumbTintColor="white"
                 value={priorityColors[id] ? priorityColors[id].value : this.state.value}
@@ -80,15 +75,14 @@ class DecisionFormCard extends Component {
           buttonStyle={{
             borderRadius: 10
           }}
+          onPress={() => this.handleSubmit(this.state.priorityColors)}
         />
       </View>
     );
   }
 }
 
-const mapStateToProps = ({ priorities, decisions }) => {
-  return { priorities, decisions };
-};
+const mapStateToProps = ({ priorities, decisions }) => ({ priorities, decisions });
 
 const mapDispatchToProps = {
   postDecision
