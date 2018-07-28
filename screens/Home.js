@@ -50,11 +50,16 @@ class Home extends React.Component {
   }
 
   render() {
+    const { priorities } = this.props;
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          {Object.keys(this.props.priorities).map((key, i) => (
-            <PriorityCard priority={this.props.priorities[key]} key={i} />
+          {Object.keys(priorities).map(uniqueHash => (
+            <PriorityCard
+              key={priorities[uniqueHash].rank}
+              priority={priorities[uniqueHash]}
+              priorityNumber={Object.keys(priorities).length}
+            />
           ))}
         </ScrollView>
       </View>
@@ -82,7 +87,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({ priorities, auth }) => {
-  console.log(priorities);
   return { priorities, auth };
 };
 

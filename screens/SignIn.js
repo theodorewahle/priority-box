@@ -30,10 +30,12 @@ class SignIn extends Component {
   };
 
   onEmailChange(email) {
+    email.toLowerCase();
     this.setState({ email });
   }
 
   onPasswordChange(password) {
+    password.toLowerCase();
     this.setState({ password });
   }
 
@@ -47,9 +49,23 @@ class SignIn extends Component {
     }
 
     return (
-      <Button title="Log In" onPress={this.onButtonPress.bind(this)}>
-        Login
-      </Button>
+      <View
+        style={{
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+        <Button
+          text="Log In"
+          title="Log In"
+          buttonStyle={{
+            borderRadius: 10,
+            width: '100%'
+          }}
+          onPress={this.onButtonPress.bind(this)}>
+          Login
+        </Button>
+      </View>
     );
   }
 
@@ -77,7 +93,7 @@ class SignIn extends Component {
 
         <Text style={styles.errorTextStyle}>{this.props.auth.error}</Text>
 
-        <CardSection>{this.renderButton()}</CardSection>
+        {this.renderButton()}
       </Card>
     );
   }

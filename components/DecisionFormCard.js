@@ -16,6 +16,7 @@ class DecisionFormCard extends Component {
     const { priorities } = this.props;
     console.log(priorities);
     console.log(sliderValues);
+    this.props.onClose();
     //CalculateDecisionScore(sliderValues)
   };
 
@@ -39,44 +40,52 @@ class DecisionFormCard extends Component {
 
   render() {
     return (
-      <View style={[s.pa3, s.ma10, s.bg_white, s.br5]}>
-        <View style={[s.br5, s.pa2]}>
-          <Text>How does this decision affect your priorites?</Text>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+        <View style={[s.pa3, s.ma10, s.bg_white, s.br5]}>
+          <View style={[s.br5, s.pa2]}>
+            <Text>How does this decision affect your priorites?</Text>
+          </View>
+          {Object.keys(this.props.priorities).map(key => {
+            const priority = this.props.priorities[key];
+            const id = priority.rank;
+            const { priorityColors } = this.state;
+            return (
+              <View
+                key={id}
+                style={{
+                  paddingTop: 2,
+                  paddingBottom: 2,
+                  paddingLeft: 5,
+                  paddingRight: 5,
+                  borderRadius: 10,
+                  marginBottom: 5,
+                  backgroundColor: this.chooseColor(priorityColors, id)
+                }}>
+                <Text style={[s.white]}>{priority.text}</Text>
+                <Slider
+                  animationType="timing"
+                  thumbTintColor="white"
+                  value={priorityColors[id] ? priorityColors[id].value : this.state.value}
+                  onValueChange={value => this.sliderMove(value, id)}
+                />
+              </View>
+            );
+          })}
+          <View s={[s.h10, s.br5]} />
+          <Button
+            title="Weigh Decision"
+            buttonStyle={{
+              borderRadius: 10
+            }}
+            onPress={() => this.handleSubmit(this.state.priorityColors)}
+          />
         </View>
-        {Object.keys(this.props.priorities).map(key => {
-          const priority = this.props.priorities[key];
-          const id = priority.rank;
-          const { priorityColors } = this.state;
-          return (
-            <View
-              key={id}
-              style={{
-                paddingTop: 2,
-                paddingBottom: 2,
-                paddingLeft: 5,
-                paddingRight: 5,
-                borderRadius: 10,
-                marginBottom: 5,
-                backgroundColor: this.chooseColor(priorityColors, id)
-              }}>
-              <Text style={[s.white]}>{priority.text}</Text>
-              <Slider
-                animationType="timing"
-                thumbTintColor="white"
-                value={priorityColors[id] ? priorityColors[id].value : this.state.value}
-                onValueChange={value => this.sliderMove(value, id)}
-              />
-            </View>
-          );
-        })}
-        <View s={[s.h10, s.br5]} />
-        <Button
-          title="Weigh Decision"
-          buttonStyle={{
-            borderRadius: 10
-          }}
-          onPress={() => this.handleSubmit(this.state.priorityColors)}
-        />
       </View>
     );
   }

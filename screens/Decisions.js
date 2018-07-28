@@ -36,7 +36,14 @@ class Decisions extends Component {
   render() {
     return (
       <ScrollView style={{ backgroundColor: '#E8E8E8', flex: 1 }}>
-        <Button title="Make New Decision" onPress={() => this.setState({ composing: true })} />
+        <Button
+          title="Make New Decision"
+          buttonStyle={{
+            borderRadius: 10,
+            marginTop: 20
+          }}
+          onPress={() => this.setState({ composing: true })}
+        />
         <ListView
           contentContainerStyle={styles.grid}
           dataSource={this.state.dataSource}
@@ -49,7 +56,7 @@ class Decisions extends Component {
           onRequestClose={() => {
             alert('Modal has been closed.');
           }}>
-          <DecisionFormCard />
+          <DecisionFormCard onClose={() => this.setState({ composing: false })} />
         </Modal>
       </ScrollView>
     );

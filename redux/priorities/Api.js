@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 
-import { GET_PRIORITIES_SUCCESS, POST_PRIORITY_SUCCESS } from './Actions';
+import { GET_PRIORITIES_SUCCESS, POST_PRIORITY_SUCCESS, DELETE_PRIORITY_SUCCESS } from './Actions';
 
 export const getPriorities = () => {
   const { currentUser } = firebase.auth();
@@ -18,7 +18,7 @@ export const getPriorities = () => {
             dispatch({ type: GET_PRIORITIES_SUCCESS, payload: snapshot.val() });
           }
         },
-        function(errorObject) {
+        errorObject => {
           console.log(errorObject);
         }
       );
@@ -37,5 +37,26 @@ export const postPriority = ({ text, rank }) => {
         dispatch({ type: POST_PRIORITY_SUCCESS });
       })
       .catch(error => console.log(error));
+  };
+};
+
+export const deletePriority = ({ rank }) => {
+  const { currentUser } = firebase.auth();
+
+  return dispatch => {
+    const priorityRef = firebase.database().ref(`users/${currentUser.uid}/priorities`);
+    root.on('value', snapshot => {
+      Object.keys(snapshot.val()).map(priority => {
+        const obj = snapshot.val();
+        if (obj[priority].rank === rank) {
+          priorityRef
+            .child(priority)
+            .remove()
+            .then(() => {
+              dispatch({ type: DELETE_PRIORITY_SUCCESS });
+            });
+        }
+      });
+    });
   };
 };
