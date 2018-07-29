@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
-import { Header, Button, Icon, FormLabel, FormInput } from 'react-native-elements';
+import { Header, Icon, FormLabel, FormInput } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
 import { postPriority } from '../redux/priorities/Api';
 
-import submit_button from '../assets/animations/submit_button.json';
 import { DangerZone } from 'expo';
-let { Lottie } = DangerZone;
+
+const { Lottie } = DangerZone;
 
 class PriorityForm extends React.Component {
   state = {
@@ -22,32 +22,28 @@ class PriorityForm extends React.Component {
   playAnimation = async () => {
     if (!this.state.animation) {
       this._loadAnimation();
-    } else {
-      if (this.animation) {
-        await this.animation.play();
-      }
+    } else if (this.animation) {
+      await this.animation.play();
     }
   };
 
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: 'Home',
-      header: (
-        <Header
-          outerContainerStyles={{
-            height: 80,
-            borderBottomWidth: 0,
-            justifyContent: 'space-between'
-          }}
-          leftComponent={
-            <Icon name="chevron-left" type="material" onPress={() => navigation.navigate('Home')} />
-          }
-          centerComponent={{ text: 'New Priority', style: [s.white, s.f5] }}
-          backgroundColor="green"
-        />
-      )
-    };
-  };
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Home',
+    header: (
+      <Header
+        outerContainerStyles={{
+          height: 80,
+          borderBottomWidth: 0,
+          justifyContent: 'space-between'
+        }}
+        leftComponent={
+          <Icon name="chevron-left" type="material" onPress={() => navigation.navigate('Home')} />
+        }
+        centerComponent={{ text: 'New Priority', style: [s.white, s.f5] }}
+        backgroundColor="green"
+      />
+    )
+  });
 
   onButtonPress = async () => {
     this.playAnimation();
@@ -97,9 +93,7 @@ class PriorityForm extends React.Component {
   };
 }
 
-const mapStateToProps = ({ priorities }) => {
-  return { priorities };
-};
+const mapStateToProps = ({ priorities }) => ({ priorities });
 
 const mapDispatchToProps = {
   postPriority

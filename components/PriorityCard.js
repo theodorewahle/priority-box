@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
-//import { decreasePriority } from '../redux/priorities/Api';
 import { deletePriority, getPriorities, updatePriorities } from '../redux/priorities/Api';
 import Colors from '../constants/Colors';
 
