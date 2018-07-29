@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
-import { Header, Button, Icon, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { Header, Button, Icon, FormLabel, FormInput } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
 import { postPriority } from '../redux/priorities/Api';
 
@@ -64,9 +64,14 @@ class PriorityForm extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={[s.mh1]}>
         <FormLabel>Priority</FormLabel>
-        <FormInput onChangeText={text => this.setState({ text })} placeholder={`${'"Run a marathon"'}`} />
+        <FormInput
+          maxLength={40}
+          multiline
+          onChangeText={text => this.setState({ text })}
+          placeholder={`${'"Run a marathon"'}`}
+        />
         <TouchableWithoutFeedback onPress={this.onButtonPress}>
           {this.state.animation && (
             <Lottie

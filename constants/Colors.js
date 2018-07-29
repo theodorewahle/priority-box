@@ -8,5 +8,7 @@ export default {
   lightGrey: '#BDBDBD',
   white: '#FFFFFF',
   red: 'red',
-  blueShade: 'blue'
+  blueShade: 'blue',
+  ivory: '#FFFFF0',
+  smoke: '#F5F5F5'
 };
