@@ -5,7 +5,6 @@ import { GET_PRIORITIES_SUCCESS, POST_PRIORITY_SUCCESS, DELETE_PRIORITY_SUCCESS 
 export const getPriorities = () => {
   const { currentUser } = firebase.auth();
   return dispatch => {
-    console.log('attempting to get priorities');
     firebase
       .database()
       .ref(`users/${currentUser.uid}/priorities`)
@@ -13,9 +12,10 @@ export const getPriorities = () => {
       .on(
         'value',
         snapshot => {
-          console.log(snapshot.val());
           if (snapshot.val()) {
             dispatch({ type: GET_PRIORITIES_SUCCESS, payload: snapshot.val() });
+          } else if (snapshot.val() === null) {
+            dispatch({ type: GET_PRIORITIES_SUCCESS, payload: {} });
           }
         },
         errorObject => {
@@ -40,23 +40,16 @@ export const postPriority = ({ text, rank }) => {
   };
 };
 
-export const deletePriority = ({ rank }) => {
-  const { currentUser } = firebase.auth();
+export const deletePriority = key => {
+  firebase
+    .database()
+    .ref(`users/${firebase.auth().currentUser.uid}/priorities/${key}`)
+    .remove();
+};
 
-  return dispatch => {
-    const priorityRef = firebase.database().ref(`users/${currentUser.uid}/priorities`);
-    root.on('value', snapshot => {
-      Object.keys(snapshot.val()).map(priority => {
-        const obj = snapshot.val();
-        if (obj[priority].rank === rank) {
-          priorityRef
-            .child(priority)
-            .remove()
-            .then(() => {
-              dispatch({ type: DELETE_PRIORITY_SUCCESS });
-            });
-        }
-      });
-    });
-  };
+export const updatePriorities = priorities => {
+  firebase
+    .database()
+    .ref(`users/${firebase.auth().currentUser.uid}/priorities`)
+    .set(priorities);
 };

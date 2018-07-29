@@ -7,17 +7,9 @@ import { styles as s } from 'react-native-style-tachyons';
 import { getDecisions } from '../redux/decisions/Api';
 import DecisionFormCard from '../components/DecisionFormCard';
 import DecisionBubble from '../components/DecisionBubble';
+import { orderDecisions } from '../utils';
 
 class Decisions extends Component {
-  constructor() {
-    super();
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-    this.state = {
-      composing: false,
-      dataSource: ds.cloneWithRows(['87%', '64%'])
-    };
-  }
-
   static navigationOptions = ({ navigation }) => ({
     title: 'Home',
     header: (
@@ -33,7 +25,29 @@ class Decisions extends Component {
     )
   });
 
+  constructor() {
+    super();
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    this.state = {
+      ds,
+      composing: false
+    };
+  }
+
+  async componentWillMount() {
+    await this.props.getDecisions();
+  }
+
+  getDataSource = () => {
+    if (!this.props.decisions) {
+      return this.state.ds.cloneWithRows(['dataSource']);
+    }
+    const dataSource = orderDecisions(this.props.decisions);
+    return this.state.ds.cloneWithRows(dataSource);
+  };
+
   render() {
+    console.log(this.props.decisions);
     return (
       <ScrollView style={{ backgroundColor: '#E8E8E8', flex: 1 }}>
         <Button
@@ -46,8 +60,8 @@ class Decisions extends Component {
         />
         <ListView
           contentContainerStyle={styles.grid}
-          dataSource={this.state.dataSource}
-          renderRow={item => <DecisionBubble score={item} />}
+          dataSource={this.getDataSource()}
+          renderRow={item => <DecisionBubble score={item.score} text={item.name} />}
         />
         <Modal
           animationType="slide"

@@ -1,64 +1,56 @@
 import React from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ActivityIndicator,
-  AsyncStorage,
-  StatusBar
-} from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
-import { Card, CardSection } from '../components/common';
-import { Header, Button, Icon } from 'react-native-elements';
+import { Header, Icon } from 'react-native-elements';
 import { getPriorities } from '../redux/priorities/Api';
+import { logoutUser } from '../redux/auth/Api';
+
 import PriorityCard from '../components/PriorityCard';
-
 import { styles as s } from 'react-native-style-tachyons';
-
-import list_order from '../assets/animations/list_order.json';
+import { orderPriorities } from '../utils';
 
 class Home extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: 'Home',
-      header: (
-        <Header
-          outerContainerStyles={{
-            height: 80,
-            borderBottomWidth: 0,
-            justifyContent: 'space-between'
-          }}
-          leftComponent={
-            <Icon name="settings" type="material" onPress={() => navigation.navigate('Settings')} />
-          }
-          rightComponent={
-            <Icon name="edit" type="material" onPress={() => navigation.navigate('PriorityForm')} />
-          }
-          centerComponent={{ text: 'Priorities', style: [s.white, s.f5] }}
-          backgroundColor="green"
-        />
-      )
-    };
-  };
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Home',
+    header: (
+      <Header
+        outerContainerStyles={{
+          height: 80,
+          borderBottomWidth: 0,
+          justifyContent: 'space-between'
+        }}
+        leftComponent={
+          <Icon
+            name="keyboard-return"
+            type="material"
+            onPress={async () => {
+              await this.props.logoutUser();
+              navigation.navigate('Auth');
+            }}
+          />
+        }
+        rightComponent={
+          <Icon name="edit" type="material" onPress={() => navigation.navigate('PriorityForm')} />
+        }
+        centerComponent={{ text: 'Priorities', style: [s.white, s.f5] }}
+        backgroundColor="green"
+      />
+    )
+  });
 
   async componentDidMount() {
     await this.props.getPriorities();
   }
 
   render() {
-    const { priorities } = this.props;
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          {Object.keys(priorities).map(uniqueHash => (
+          {orderPriorities(this.props.priorities).map(priority => (
             <PriorityCard
-              key={priorities[uniqueHash].rank}
-              priority={priorities[uniqueHash]}
-              priorityNumber={Object.keys(priorities).length}
+              key={priority.rank}
+              priority={priority}
+              priorityNumber={Object.keys(this.props.priorities).length}
             />
           ))}
         </ScrollView>
@@ -86,12 +78,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ priorities, auth }) => {
-  return { priorities, auth };
-};
+const mapStateToProps = ({ priorities, auth }) => ({ priorities, auth });
 
 const mapDispatchToProps = {
-  getPriorities
+  getPriorities,
+  logoutUser
 };
 
 export default connect(
