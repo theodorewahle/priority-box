@@ -66,7 +66,7 @@ class PriorityForm extends React.Component {
           maxLength={40}
           multiline
           onChangeText={text => this.setState({ text })}
-          placeholder={`${'"Run a marathon"'}`}
+          placeholder={`${'"Run a marathon!"'}`}
         />
         <TouchableWithoutFeedback onPress={this.onButtonPress}>
           {this.state.animation && (
