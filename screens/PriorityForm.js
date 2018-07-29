@@ -60,7 +60,7 @@ class PriorityForm extends React.Component {
 
   render() {
     return (
-      <View style={[s.mh1]}>
+      <View style={[s.mh1, s.aic]}>
         <FormLabel>Priority</FormLabel>
         <FormInput
           maxLength={40}
