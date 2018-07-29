@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { connect } from 'react-redux';
-import { Slider, Button, FormLabel, FormInput } from 'react-native-elements';
+import { Slider, Button } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
 import { postDecision } from '../redux/decisions/Api';
 import CalculateDecisionScore from '../utils/CalculateDecisionScore';

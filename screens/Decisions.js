@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, ScrollView, ListView, StyleSheet, Modal } from 'react-native';
+import { ScrollView, ListView, StyleSheet, Modal } from 'react-native';
 import { connect } from 'react-redux';
-import { Header, Icon, Button } from 'react-native-elements';
+import { Header, Button } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
 
 import { getDecisions } from '../redux/decisions/Api';
