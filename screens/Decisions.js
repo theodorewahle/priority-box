@@ -47,7 +47,6 @@ class Decisions extends Component {
   };
 
   render() {
-    console.log(this.props.decisions);
     return (
       <ScrollView style={{ backgroundColor: '#E8E8E8', flex: 1 }}>
         <Button

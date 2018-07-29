@@ -25,7 +25,6 @@ class DecisionFormCard extends Component {
       subScores[text] = sliderValues[rank].value;
     });
     const decisionResults = { score, subScores, name: this.state.name };
-    console.log(decisionResults);
     await this.props.postDecision(decisionResults);
   };
 
