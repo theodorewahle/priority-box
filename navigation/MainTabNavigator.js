@@ -4,7 +4,6 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import Home from '../screens/Home';
 import Decisions from '../screens/Decisions';
-import SettingsScreen from '../screens/SettingsScreen';
 import PriorityForm from '../screens/PriorityForm';
 import SignIn from '../screens/SignIn';
 
@@ -50,22 +49,7 @@ DecisionsStack.navigationOptions = {
   )
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen
-});
-
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
-    />
-  )
-};
-
 export default createBottomTabNavigator({
   HomeStack,
-  DecisionsStack,
-  SettingsStack
+  DecisionsStack
 });

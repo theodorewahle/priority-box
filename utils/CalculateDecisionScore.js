@@ -21,7 +21,7 @@ const CalculateDecisionScore = (sliderValues, priorities) => {
     const weightedScore = sliderScore * Math.pow(2, POWER - rankKey); //if POWER is 7, this is 2**6, 2**5, etc...
     totalScore += weightedScore;
   });
-  const finalWeightedScore = totalScore / DENOMINATOR;
+  const finalWeightedScore = totalScore / (DENOMINATOR - 1);
   return finalWeightedScore;
 };
 

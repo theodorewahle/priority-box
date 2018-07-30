@@ -2,28 +2,26 @@ import firebase from 'firebase';
 
 import { loginUserSuccess, loginUserFail, LOGIN_USER, LOGOUT_USER_SUCCESS } from './Actions';
 
-export const loginUser = (email, password, navigation) => {
-  return dispatch => {
+export const loginUser = (email, password) => async dispatch => {
+  try {
     dispatch({ type: LOGIN_USER });
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(user => {
-        loginUserSuccess(dispatch, user, navigation);
-      })
-      .catch(error => {
-        console.log(error);
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(email, password)
-          .then(user => loginUserSuccess(dispatch, user, navigation))
-          .catch(() => loginUserFail(dispatch));
-      });
-  };
+    const user = await firebase.auth().signInWithEmailAndPassword(email, password);
+    dispatch(loginUserSuccess(user));
+  } catch (e) {
+    dispatch(loginUserFail(e));
+  }
 };
 
-export const logoutUser = dispatch => {
-  return dispatch => {
-    dispatch({ type: LOGOUT_USER_SUCCESS });
-  };
+export const signUpUser = (email, password) => async dispatch => {
+  try {
+    dispatch({ type: LOGIN_USER });
+    const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
+    dispatch(loginUserSuccess(user));
+  } catch (e) {
+    dispatch(loginUserFail(e));
+  }
+};
+
+export const logoutUser = () => async dispatch => {
+  dispatch({ type: LOGOUT_USER_SUCCESS });
 };

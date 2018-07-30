@@ -10,7 +10,7 @@ import { styles as s } from 'react-native-style-tachyons';
 import logo from '../assets/images/icon.png';
 import Colors from '../constants/Colors';
 
-class SignIn extends Component {
+class SignUp extends Component {
   static navigationOptions = {
     header: null
   };
@@ -25,10 +25,7 @@ class SignIn extends Component {
 
   onButtonPress = async () => {
     await this.props.loginUser(this.props.auth.email, this.props.auth.password);
-    console.log(this.props);
-    if (this.props.auth.user != null) {
-      this.props.navigation.navigate('App');
-    }
+    this.props.navigation.navigate('App');
   };
 
   renderButton() {
@@ -44,8 +41,8 @@ class SignIn extends Component {
           alignItems: 'center'
         }}>
         <Button
-          text="Log In"
-          title="Log In"
+          text="Sign Up"
+          title="Sign Up"
           buttonStyle={{
             borderRadius: 10,
             width: '100%',
@@ -61,7 +58,7 @@ class SignIn extends Component {
   render() {
     return (
       <View style={[{ backgroundColor: 'white', height: '100%' }, s.aic]}>
-        <Image style={[{ height: 150, width: '100%' }, s.mb3]} source={logo} />
+        <Image style={[{ height: 300, width: '100%' }, s.mt5, s.mb3]} source={logo} />
         <View
           style={[
             {
@@ -110,12 +107,6 @@ class SignIn extends Component {
         <Text style={styles.errorTextStyle}>{this.props.auth.error}</Text>
 
         {this.renderButton()}
-        <View style={[s.flx_row, s.mt4]}>
-          <Text style={[s.blue, s.f6]}>Are you new here? </Text>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
-            <Text style={([s.blue, s.f6], { color: 'blue' })}>Create an account ></Text>
-          </TouchableOpacity>
-        </View>
       </View>
     );
   }
@@ -140,4 +131,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignIn);
+)(SignUp);

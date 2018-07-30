@@ -19,16 +19,6 @@ class Home extends React.Component {
           borderBottomWidth: 0,
           justifyContent: 'space-between'
         }}
-        leftComponent={
-          <Icon
-            name="keyboard-return"
-            type="material"
-            onPress={async () => {
-              await this.props.logoutUser();
-              navigation.navigate('Auth');
-            }}
-          />
-        }
         rightComponent={
           <Icon name="edit" type="material" onPress={() => navigation.navigate('PriorityForm')} />
         }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Header, Icon, FormLabel, FormInput } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
 import { postPriority } from '../redux/priorities/Api';
-
+import submit_button from '../assets/animations/submit_button.json';
 import { DangerZone } from 'expo';
 
 const { Lottie } = DangerZone;
@@ -55,35 +55,37 @@ class PriorityForm extends React.Component {
     if (priorityObject.text.length > 0) {
       await this.props.postPriority(priorityObject);
     }
-    this.props.navigation.navigate('Home');
+    setTimeout(() => this.props.navigation.navigate('Home'), 2800);
   };
 
   render() {
     return (
-      <View style={[s.mh1, s.aic, s.br4]}>
+      <View style={[s.mh1, s.br4]}>
         <FormLabel>Priority</FormLabel>
         <FormInput
           maxLength={40}
           multiline
           onChangeText={text => this.setState({ text })}
-          placeholder={`${'"Run a marathon!!!"'}`}
+          placeholder={`${'"Run a marathon"'}`}
         />
-        <TouchableWithoutFeedback onPress={this.onButtonPress}>
-          {this.state.animation && (
-            <Lottie
-              ref={animation => {
-                this.animation = animation;
-              }}
-              style={{
-                width: 300,
-                height: 300
-              }}
-              source={this.state.animation}
-              loop={false}
-              speed={1.5}
-            />
-          )}
-        </TouchableWithoutFeedback>
+        <View style={[s.aic, s.pr4]}>
+          <TouchableWithoutFeedback onPress={this.onButtonPress}>
+            {this.state.animation && (
+              <Lottie
+                ref={animation => {
+                  this.animation = animation;
+                }}
+                style={{
+                  width: 300,
+                  height: 300
+                }}
+                source={this.state.animation}
+                loop={false}
+                speed={1.5}
+              />
+            )}
+          </TouchableWithoutFeedback>
+        </View>
       </View>
     );
   }

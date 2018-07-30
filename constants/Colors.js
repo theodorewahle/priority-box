@@ -1,5 +1,8 @@
 export default {
   darkPrimary: '#689F38',
+  darkestBlue: '#191BA9',
+  mediumBlue: '#5CC2F2',
+  lightestBlue: '#C1EAF2',
   primary: '#8BC34A',
   lightPrimary: '#DCEDC8',
   accent: '#FF4081',

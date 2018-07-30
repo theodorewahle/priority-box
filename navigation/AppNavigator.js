@@ -4,15 +4,15 @@ import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator }
 import Home from '../screens/Home';
 import PriorityForm from '../screens/PriorityForm';
 import Decisions from '../screens/Decisions';
-import Settings from '../screens/Settings';
 import AuthLoading from '../screens/AuthLoading';
 import SignIn from '../screens/SignIn';
+import SignUp from '../screens/SignUp';
 
 import { Icon } from 'react-native-elements';
 
-const AppStack = createStackNavigator({ Home, Settings, PriorityForm });
+const AppStack = createStackNavigator({ Home, PriorityForm });
 const DecisionsStack = createStackNavigator({ Decisions });
-const AuthStack = createStackNavigator({ SignIn });
+const AuthStack = createStackNavigator({ SignIn, SignUp }, { headerMode: 'screen' });
 
 DecisionsStack.navigationOptions = {
   tabBarLabel: 'Decisions',

@@ -47,7 +47,6 @@ class PriorityCard extends React.Component {
     const { priorities, priority } = this.props;
     const delKey = Object.keys(priorities).filter(key => priorities[key].rank === priority.rank); // should be key of obj with rank 3
     await deletePriority(delKey); // delete the key
-    await getPriorities();
     const newObject = Object.assign({}, priorities); //sould be the objecy
     delete newObject[delKey];
     await Object.keys(newObject).map(id => {
@@ -63,15 +62,16 @@ class PriorityCard extends React.Component {
     if (this.state.open) {
       return (
         <View style={[s.jcsb, s.flx_row, { backgroundColor: Colors.smoke }, s.mh4, s.pa1]}>
-          {this.props.priority.rank !== 1 && (
-            <View style={[s.aic]}>
-              <Button
-                icon={{ name: 'arrow-upward' }}
-                buttonStyle={[{ backgroundColor: 'blue' }, s.br5, s.pl3, s.pr2]}
-                onPress={this.handleMoveUp}
-              />
-            </View>
-          )}
+          {this.props.priority.rank !== 1 &&
+            this.props.priorityNumber > 1 && (
+              <View style={[s.aic]}>
+                <Button
+                  icon={{ name: 'arrow-upward' }}
+                  buttonStyle={[{ backgroundColor: 'blue' }, s.br5, s.pl3, s.pr2]}
+                  onPress={this.handleMoveUp}
+                />
+              </View>
+            )}
           <View style={[s.aic]}>
             <Button
               title="delete"
@@ -96,6 +96,7 @@ class PriorityCard extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <View
         style={[
@@ -129,8 +130,6 @@ class PriorityCard extends React.Component {
 const mapStateToProps = ({ priorities }) => ({ priorities });
 
 const mapDispatchToProps = {
-  //decreasePriority,
-  //increasePriority,
   deletePriority,
   getPriorities
 };

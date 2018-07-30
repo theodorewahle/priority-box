@@ -17,8 +17,15 @@ class DecisionFormCard extends Component {
 
   handleSubmit = async sliderValues => {
     const { priorities } = this.props;
+    const backUpValues = null;
+    console.log(sliderValues);
+    if (Object.keys(priorities).length === 0) {
+      Object.keys(priorities).map(key => {
+        backUpValues[key] = 0.5;
+      });
+    }
     this.props.onClose();
-    const score = await CalculateDecisionScore(sliderValues, priorities);
+    const score = await CalculateDecisionScore(backUpValues || sliderValues, priorities);
     const subScores = {};
     Object.keys(priorities).map(priorityKey => {
       const { text, rank } = priorities[priorityKey];
