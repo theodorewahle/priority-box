@@ -1,15 +1,34 @@
 import React from 'react';
-import { View, TouchableWithoutFeedback } from 'react-native';
+import { View, TouchableWithoutFeedback, Text, TextInput } from 'react-native';
 import { connect } from 'react-redux';
-import { Header, Icon, FormLabel, FormInput } from 'react-native-elements';
+import { Header, Icon } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
+import Colors from '../constants/Colors';
 import { postPriority } from '../redux/priorities/Api';
-import submit_button from '../assets/animations/submit_button.json';
+import submitButton from '../assets/animations/submit_button.json';
 import { DangerZone } from 'expo';
 
 const { Lottie } = DangerZone;
 
 class PriorityForm extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Home',
+    header: (
+      <Header
+        outerContainerStyles={{
+          height: 80,
+          borderBottomWidth: 0,
+          justifyContent: 'space-between'
+        }}
+        leftComponent={
+          <Icon name="chevron-left" type="material" onPress={() => navigation.navigate('Home')} />
+        }
+        centerComponent={{ text: 'New Priority', style: [s.white, s.f5] }}
+        backgroundColor={Colors.mediumBlue}
+      />
+    )
+  });
+
   state = {
     text: '',
     animation: null
@@ -27,24 +46,6 @@ class PriorityForm extends React.Component {
     }
   };
 
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Home',
-    header: (
-      <Header
-        outerContainerStyles={{
-          height: 80,
-          borderBottomWidth: 0,
-          justifyContent: 'space-between'
-        }}
-        leftComponent={
-          <Icon name="chevron-left" type="material" onPress={() => navigation.navigate('Home')} />
-        }
-        centerComponent={{ text: 'New Priority', style: [s.white, s.f5] }}
-        backgroundColor="green"
-      />
-    )
-  });
-
   onButtonPress = async () => {
     this.playAnimation();
 
@@ -60,14 +61,19 @@ class PriorityForm extends React.Component {
 
   render() {
     return (
-      <View style={[s.mh1, s.br4]}>
-        <FormLabel>Priority</FormLabel>
-        <FormInput
-          maxLength={40}
-          multiline
-          onChangeText={text => this.setState({ text })}
-          placeholder={`${'"Run a marathon"'}`}
-        />
+      <View style={([s.mh1, s.br4], { backgroundColor: 'white', flex: 1 })}>
+        <View style={[s.aic, s.mt3]}>
+          <Text style={[s.f5, s.mh3]}>{"What's your priority?"}</Text>
+          <View style={[s.br5, s.pa3, s.mb2]}>
+            <TextInput
+              style={[s.f3]}
+              maxLength={40}
+              multiline
+              onChangeText={text => this.setState({ text })}
+              placeholder={`${'"Run a marathon"'}`}
+            />
+          </View>
+        </View>
         <View style={[s.aic, s.pr4]}>
           <TouchableWithoutFeedback onPress={this.onButtonPress}>
             {this.state.animation && (
@@ -91,7 +97,7 @@ class PriorityForm extends React.Component {
   }
 
   _loadAnimation = () => {
-    this.setState({ animation: submit_button });
+    this.setState({ animation: submitButton });
   };
 }
 

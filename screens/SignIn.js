@@ -20,7 +20,7 @@ class SignIn extends Component {
   }
 
   onPasswordChange(text) {
-    this.props.passwordChanged(text.toLowerCase());
+    this.props.passwordChanged(text);
   }
 
   onButtonPress = async () => {

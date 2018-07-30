@@ -7,6 +7,8 @@ import { styles as s } from 'react-native-style-tachyons';
 import { getDecisions } from '../redux/decisions/Api';
 import DecisionFormCard from '../components/DecisionFormCard';
 import DecisionBubble from '../components/DecisionBubble';
+import Colors from '../constants/Colors';
+
 import { orderDecisions } from '../utils';
 
 class Decisions extends Component {
@@ -20,7 +22,7 @@ class Decisions extends Component {
           justifyContent: 'space-between'
         }}
         centerComponent={{ text: 'Decisions', style: [s.white, s.f5] }}
-        backgroundColor="green"
+        backgroundColor={Colors.mediumBlue}
       />
     )
   });
@@ -48,19 +50,20 @@ class Decisions extends Component {
 
   render() {
     return (
-      <ScrollView style={{ backgroundColor: '#E8E8E8', flex: 1 }}>
+      <ScrollView style={{ backgroundColor: 'white', flex: 1 }}>
         <Button
           title="Make New Decision"
           buttonStyle={{
             borderRadius: 10,
-            marginTop: 20
+            marginTop: 20,
+            backgroundColor: Colors.darkestBlue
           }}
           onPress={() => this.setState({ composing: true })}
         />
         <ListView
           contentContainerStyle={styles.grid}
           dataSource={this.getDataSource()}
-          renderRow={item => <DecisionBubble score={item.score} text={item.name} />}
+          renderRow={item => <DecisionBubble score={item.score} text={item.name} date={item.date} />}
         />
         <Modal
           animationType="slide"

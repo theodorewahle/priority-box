@@ -6,6 +6,7 @@ import { styles as s } from 'react-native-style-tachyons';
 import { postDecision } from '../redux/decisions/Api';
 import CalculateDecisionScore from '../utils/CalculateDecisionScore';
 import { orderPriorities } from '../utils';
+import Colors from '../constants/Colors';
 
 class DecisionFormCard extends Component {
   state = {
@@ -24,7 +25,7 @@ class DecisionFormCard extends Component {
       const { text, rank } = priorities[priorityKey];
       subScores[text] = sliderValues[rank] ? sliderValues[rank].value : 0.5;
     });
-    const decisionResults = { score, subScores, name: this.state.name };
+    const decisionResults = { score, subScores, name: this.state.name, date: new Date().toString() };
     await this.props.postDecision(decisionResults);
   };
 
@@ -39,11 +40,11 @@ class DecisionFormCard extends Component {
   chooseColor = (priorityColors, id) => {
     if (priorityColors[id]) {
       if (priorityColors[id].r < 145 && priorityColors[id].g < 145) {
-        return 'grey';
+        return 'yellow';
       }
       return `rgb(${priorityColors[id].r}, ${priorityColors[id].g}, 0)`;
     }
-    return 'grey';
+    return 'yellow';
   };
 
   render() {
@@ -70,7 +71,8 @@ class DecisionFormCard extends Component {
             <Button
               title="Next"
               buttonStyle={{
-                borderRadius: 10
+                borderRadius: 10,
+                backgroundColor: Colors.mediumBlue
               }}
               onPress={() => this.setState({ step: 2 })}
             />
@@ -98,10 +100,10 @@ class DecisionFormCard extends Component {
                     marginBottom: 5,
                     backgroundColor: this.chooseColor(priorityColors, id)
                   }}>
-                  <Text style={[s.white]}>{priority.text}</Text>
+                  <Text style={[s.black]}>{priority.text}</Text>
                   <Slider
                     animationType="timing"
-                    thumbTintColor="white"
+                    thumbTintColor="black"
                     value={priorityColors[id] ? priorityColors[id].value : this.state.value}
                     onValueChange={value => this.sliderMove(value, id)}
                   />
@@ -112,7 +114,8 @@ class DecisionFormCard extends Component {
             <Button
               title="Weigh Decision"
               buttonStyle={{
-                borderRadius: 10
+                borderRadius: 10,
+                backgroundColor: Colors.mediumBlue
               }}
               onPress={() => this.handleSubmit(this.state.priorityColors)}
             />

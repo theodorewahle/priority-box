@@ -8,6 +8,7 @@ import { logoutUser } from '../redux/auth/Api';
 import PriorityCard from '../components/PriorityCard';
 import { styles as s } from 'react-native-style-tachyons';
 import { orderPriorities } from '../utils';
+import Colors from '../constants/Colors';
 
 class Home extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -23,7 +24,7 @@ class Home extends React.Component {
           <Icon name="edit" type="material" onPress={() => navigation.navigate('PriorityForm')} />
         }
         centerComponent={{ text: 'Priorities', style: [s.white, s.f5] }}
-        backgroundColor="green"
+        backgroundColor={Colors.mediumBlue}
       />
     )
   });

@@ -67,7 +67,7 @@ class PriorityCard extends React.Component {
               <View style={[s.aic]}>
                 <Button
                   icon={{ name: 'arrow-upward' }}
-                  buttonStyle={[{ backgroundColor: 'blue' }, s.br5, s.pl3, s.pr2]}
+                  buttonStyle={[{ backgroundColor: Colors.darkestBlue }, s.br5, s.pl3, s.pr2]}
                   onPress={this.handleMoveUp}
                 />
               </View>
@@ -84,7 +84,7 @@ class PriorityCard extends React.Component {
               {this.props.key !== this.props.priorityNumber && (
                 <Button
                   icon={{ name: 'arrow-downward' }}
-                  buttonStyle={[{ backgroundColor: 'blue' }, s.br5, s.pl3, s.pr2]}
+                  buttonStyle={[{ backgroundColor: Colors.darkestBlue }, s.br5, s.pl3, s.pr2]}
                   onPress={this.handleMoveDown}
                 />
               )}

@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
-
+import Colors from '../constants/Colors';
 const DecisionBubble = ({ score, text }) => {
   const chooseColor = () => {
     if (score > 0.66) {
-      return 'green';
+      return Colors.goodDecision;
     } else if (score < 0.33) {
-      return 'red';
+      return Colors.badDecision;
     }
-    return 'yellow';
+    return Colors.okayDecision;
   };
 
   const styles = StyleSheet.create({
