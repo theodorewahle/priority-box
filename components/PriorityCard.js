@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
 import { deletePriority, getPriorities, updatePriorities } from '../redux/priorities/Api';
@@ -96,7 +96,6 @@ class PriorityCard extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <View
         style={[
@@ -109,18 +108,15 @@ class PriorityCard extends React.Component {
           },
           s.mb1
         ]}>
-        <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph2, s.pv3]}>
-          <View>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            this.setState({ open: !this.state.open });
+          }}>
+          <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.pv3, s.ph2]}>
             <Text style={[s.f3, s.black, s.pr2]}>{this.props.priority.text}</Text>
           </View>
-          <Icon
-            name="menu"
-            type="material"
-            onPress={() => {
-              this.setState({ open: !this.state.open });
-            }}
-          />
-        </View>
+        </TouchableWithoutFeedback>
+
         <View>{this.renderButtonPanel()}</View>
       </View>
     );

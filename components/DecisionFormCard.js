@@ -40,11 +40,11 @@ class DecisionFormCard extends Component {
   chooseColor = (priorityColors, id) => {
     if (priorityColors[id]) {
       if (priorityColors[id].r < 145 && priorityColors[id].g < 145) {
-        return 'yellow';
+        return 'grey';
       }
       return `rgb(${priorityColors[id].r}, ${priorityColors[id].g}, 0)`;
     }
-    return 'yellow';
+    return 'grey';
   };
 
   render() {
@@ -54,7 +54,12 @@ class DecisionFormCard extends Component {
           flex: 1,
           flexDirection: 'column',
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.3,
+          shadowRadius: 2,
+          borderRadius: 3
         }}>
         {this.state.step === 1 && (
           <View style={[s.ph4, s.pv4, s.bg_white, s.br5]}>
@@ -65,7 +70,7 @@ class DecisionFormCard extends Component {
               <TextInput
                 onChangeText={name => this.setState({ name })}
                 placeholder={`${'"Get a gym membership"'}`}
-                maxLength={30}
+                maxLength={35}
               />
             </View>
             <Button
@@ -80,7 +85,7 @@ class DecisionFormCard extends Component {
         )}
 
         {this.state.step === 2 && (
-          <View style={[s.pa3, s.ma10, s.bg_white, s.br5]}>
+          <View style={[s.pa3, s.ma10, s.br5, { backgroundColor: 'white' }]}>
             <View style={[s.br5, s.pa2]}>
               <Text style={[s.f8]}>How does this decision affect your priorities?</Text>
               <Text style={[s.f3, s.asc, s.mv2]}>{this.state.name}</Text>

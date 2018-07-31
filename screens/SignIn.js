@@ -60,57 +60,59 @@ class SignIn extends Component {
 
   render() {
     return (
-      <View style={[{ backgroundColor: 'white', height: '100%' }, s.aic]}>
-        <Image style={[{ height: 150, width: '100%' }, s.mb3]} source={logo} />
-        <View
-          style={[
-            {
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.3,
-              shadowRadius: 2,
-              borderRadius: 3,
-              width: '100%'
-            },
-            s.mb1
-          ]}>
-          <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph2, s.pv3]}>
-            <Input
-              style={([s.h2, s.tac, s.f5], { textAlign: 'center', width: '100%' })}
-              label="Email"
-              placeholder="email"
-              onChangeText={this.onEmailChange.bind(this)}
-              value={this.props.auth.email}
-            />
+      <View style={[{ backgroundColor: 'white', height: '100%' }, s.aic, s.jcsb]}>
+        <View style={[s.aic]}>
+          <Image style={[{ height: 280, width: 280 }]} source={logo} />
+
+          <View
+            style={[
+              {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.3,
+                shadowRadius: 2,
+                borderRadius: 3,
+                width: '100%'
+              },
+              s.mb1
+            ]}>
+            <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph2, s.pv3]}>
+              <Input
+                style={([s.h2, s.tac, s.f5], { textAlign: 'center', width: '100%' })}
+                label="Email"
+                placeholder="email"
+                onChangeText={this.onEmailChange.bind(this)}
+                value={this.props.auth.email}
+              />
+            </View>
           </View>
-        </View>
-
-        <View
-          style={[
-            {
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.3,
-              shadowRadius: 2,
-              borderRadius: 3,
-              width: '100%'
-            },
-            s.mb1
-          ]}>
-          <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph2, s.pv3]}>
-            <Input
-              style={([s.h2, s.tac, s.f5], { textAlign: 'center', width: '100%' })}
-              placeholder="password"
-              onChangeText={this.onPasswordChange.bind(this)}
-              value={this.props.auth.password}
-            />
+          <View
+            style={[
+              {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.3,
+                shadowRadius: 2,
+                borderRadius: 3,
+                width: '100%'
+              },
+              s.mb1
+            ]}>
+            <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph2, s.pv3]}>
+              <Input
+                style={([s.h2, s.tac, s.f5], { textAlign: 'center', width: '100%' })}
+                placeholder="password"
+                onChangeText={this.onPasswordChange.bind(this)}
+                value={this.props.auth.password}
+              />
+            </View>
           </View>
+
+          <Text style={styles.errorTextStyle}>{this.props.auth.error}</Text>
+
+          {this.renderButton()}
         </View>
-
-        <Text style={styles.errorTextStyle}>{this.props.auth.error}</Text>
-
-        {this.renderButton()}
-        <View style={[s.flx_row, s.mt4]}>
+        <View style={[s.flx_row, s.mt4, s.mb3]}>
           <Text style={[s.blue, s.f6]}>Are you new here? </Text>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
             <Text style={([s.blue, s.f6], { color: 'blue' })}>Create an account ></Text>

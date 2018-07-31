@@ -45,6 +45,7 @@ class Decisions extends Component {
       return this.state.ds.cloneWithRows(['dataSource']);
     }
     const dataSource = orderDecisions(this.props.decisions);
+    console.log(this.props.decisions);
     return this.state.ds.cloneWithRows(dataSource);
   };
 
@@ -63,7 +64,9 @@ class Decisions extends Component {
         <ListView
           contentContainerStyle={styles.grid}
           dataSource={this.getDataSource()}
-          renderRow={item => <DecisionBubble score={item.score} text={item.name} date={item.date} />}
+          renderRow={item => (
+            <DecisionBubble score={item.score} text={item.name} date={item.date} rows={item.subScores} />
+          )}
         />
         <Modal
           animationType="slide"

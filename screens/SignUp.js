@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, TextInput as Input, Image } from 'react-native';
 import { connect } from 'react-redux';
-import { loginUser } from '../redux/auth/Api';
+import { signUpUser } from '../redux/auth/Api';
 import { emailChanged, passwordChanged } from '../redux/auth/Actions';
 
 import { Spinner } from '../components/common';
@@ -20,12 +20,15 @@ class SignUp extends Component {
   }
 
   onPasswordChange(text) {
-    this.props.passwordChanged(text.toLowerCase());
+    this.props.passwordChanged(text);
   }
 
   onButtonPress = async () => {
-    await this.props.loginUser(this.props.auth.email, this.props.auth.password);
-    this.props.navigation.navigate('App');
+    await this.props.signUpUser(this.props.auth.email, this.props.auth.password);
+    console.log(this.props);
+    if (this.props.auth.user != null) {
+      this.props.navigation.navigate('App');
+    }
   };
 
   renderButton() {
@@ -57,56 +60,58 @@ class SignUp extends Component {
 
   render() {
     return (
-      <View style={[{ backgroundColor: 'white', height: '100%' }, s.aic]}>
-        <Image style={[{ height: 300, width: '100%' }, s.mt5, s.mb3]} source={logo} />
-        <View
-          style={[
-            {
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.3,
-              shadowRadius: 2,
-              borderRadius: 3,
-              width: '100%'
-            },
-            s.mb1
-          ]}>
-          <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph2, s.pv3]}>
-            <Input
-              style={([s.h2, s.tac, s.f5], { textAlign: 'center', width: '100%' })}
-              label="Email"
-              placeholder="email"
-              onChangeText={this.onEmailChange.bind(this)}
-              value={this.props.auth.email}
-            />
+      <View style={[{ backgroundColor: 'white', height: '100%' }, s.aic, s.jcsb]}>
+        <View style={[s.aic]}>
+          <Image style={[{ height: 280, width: 280 }]} source={logo} />
+
+          <View
+            style={[
+              {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.3,
+                shadowRadius: 2,
+                borderRadius: 3,
+                width: '100%'
+              },
+              s.mb1
+            ]}>
+            <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph2, s.pv3]}>
+              <Input
+                style={([s.h2, s.tac, s.f5], { textAlign: 'center', width: '100%' })}
+                label="Email"
+                placeholder="email"
+                onChangeText={this.onEmailChange.bind(this)}
+                value={this.props.auth.email}
+              />
+            </View>
           </View>
-        </View>
-
-        <View
-          style={[
-            {
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.3,
-              shadowRadius: 2,
-              borderRadius: 3,
-              width: '100%'
-            },
-            s.mb1
-          ]}>
-          <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph2, s.pv3]}>
-            <Input
-              style={([s.h2, s.tac, s.f5], { textAlign: 'center', width: '100%' })}
-              placeholder="password"
-              onChangeText={this.onPasswordChange.bind(this)}
-              value={this.props.auth.password}
-            />
+          <View
+            style={[
+              {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.3,
+                shadowRadius: 2,
+                borderRadius: 3,
+                width: '100%'
+              },
+              s.mb1
+            ]}>
+            <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph2, s.pv3]}>
+              <Input
+                style={([s.h2, s.tac, s.f5], { textAlign: 'center', width: '100%' })}
+                placeholder="password"
+                onChangeText={this.onPasswordChange.bind(this)}
+                value={this.props.auth.password}
+              />
+            </View>
           </View>
+
+          <Text style={styles.errorTextStyle}>{this.props.auth.error}</Text>
+
+          {this.renderButton()}
         </View>
-
-        <Text style={styles.errorTextStyle}>{this.props.auth.error}</Text>
-
-        {this.renderButton()}
       </View>
     );
   }
@@ -125,7 +130,7 @@ const mapStateToProps = ({ auth }) => ({ auth });
 const mapDispatchToProps = {
   emailChanged,
   passwordChanged,
-  loginUser
+  signUpUser
 };
 
 export default connect(
