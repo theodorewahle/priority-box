@@ -34,7 +34,6 @@ class DecisionBubble extends React.Component {
 
   render() {
     const { score, text, date } = this.props;
-    console.log(this.props);
     const styles = StyleSheet.create({
       gridItem: {
         margin: 5,
@@ -122,7 +121,14 @@ class DecisionBubble extends React.Component {
                       }}
                       buttonStyle={[s.br5, { backgroundColor: Colors.darkestBlue, minWidth: '100%' }]}
                     />
-                    <Icon name="delete" type="material" onPress={() => deleteDecision(1)} />
+                    <Icon
+                      name="delete"
+                      type="material"
+                      onPress={() => {
+                        deleteDecision(this.props.id);
+                        this.setState({ open: !this.state.open });
+                      }}
+                    />
                   </View>
                 </View>
               </View>

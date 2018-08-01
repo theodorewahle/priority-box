@@ -31,7 +31,8 @@ class PriorityForm extends React.Component {
 
   state = {
     text: '',
-    animation: null
+    animation: null,
+    tapped: -500
   };
 
   componentWillMount() {
@@ -48,15 +49,19 @@ class PriorityForm extends React.Component {
 
   onButtonPress = async () => {
     this.playAnimation();
+    this.setState({ tapped: this.state.tapped + 500 });
 
     const priorityObject = {
       text: this.state.text,
       rank: Object.keys(this.props.priorities).length + 1
     };
-    if (priorityObject.text.length > 0) {
+    if (priorityObject.text.length > 0 && this.state.tapped < -1) {
       await this.props.postPriority(priorityObject);
     }
-    setTimeout(() => this.props.navigation.navigate('Home'), 2800);
+    setTimeout(() => {
+      this.props.navigation.navigate('Home');
+      this.setState({ tapped: -500 });
+    }, 2800);
   };
 
   render() {
@@ -75,7 +80,7 @@ class PriorityForm extends React.Component {
           </View>
         </View>
         <View style={[s.aic, s.pr4]}>
-          <TouchableWithoutFeedback onPress={this.onButtonPress}>
+          <TouchableWithoutFeedback style={[s.aic]} onPress={this.onButtonPress}>
             {this.state.animation && (
               <Lottie
                 ref={animation => {

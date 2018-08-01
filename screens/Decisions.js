@@ -12,23 +12,25 @@ import Colors from '../constants/Colors';
 import { orderDecisions } from '../utils';
 
 class Decisions extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Home',
-    header: (
-      <Header
-        outerContainerStyles={{
-          height: 80,
-          borderBottomWidth: 0,
-          justifyContent: 'space-between'
-        }}
-        centerComponent={{ text: 'Decisions', style: [s.white, s.f5] }}
-        backgroundColor={Colors.mediumBlue}
-      />
-    )
-  });
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Home',
+      header: (
+        <Header
+          outerContainerStyles={{
+            height: 80,
+            borderBottomWidth: 0,
+            justifyContent: 'space-between'
+          }}
+          centerComponent={{ text: 'Decisions', style: [s.white, s.f5] }}
+          backgroundColor={Colors.mediumBlue}
+        />
+      )
+    };
+  };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       ds,
@@ -45,7 +47,6 @@ class Decisions extends Component {
       return this.state.ds.cloneWithRows(['dataSource']);
     }
     const dataSource = orderDecisions(this.props.decisions);
-    console.log(this.props.decisions);
     return this.state.ds.cloneWithRows(dataSource);
   };
 
@@ -62,10 +63,17 @@ class Decisions extends Component {
           onPress={() => this.setState({ composing: true })}
         />
         <ListView
+          enableEmptySections
           contentContainerStyle={styles.grid}
           dataSource={this.getDataSource()}
-          renderRow={item => (
-            <DecisionBubble score={item.score} text={item.name} date={item.date} rows={item.subScores} />
+          renderRow={({ key, decision }) => (
+            <DecisionBubble
+              id={key}
+              score={decision.score}
+              text={decision.name}
+              date={decision.date}
+              rows={decision.subScores}
+            />
           )}
         />
         <Modal

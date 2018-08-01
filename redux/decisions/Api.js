@@ -13,6 +13,8 @@ export const getDecisions = () => {
         snapshot => {
           if (snapshot.val()) {
             dispatch({ type: GET_DECISIONS_SUCCESS, payload: snapshot.val() });
+          } else if (snapshot.val() === null) {
+            dispatch({ type: GET_DECISIONS_SUCCESS, payload: {} });
           }
         },
         function(errorObject) {

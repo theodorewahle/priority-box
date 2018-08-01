@@ -8,6 +8,7 @@ export const loginUser = (email, password) => async dispatch => {
     const user = await firebase.auth().signInWithEmailAndPassword(email, password);
     dispatch(loginUserSuccess(user));
   } catch (e) {
+    console.log(e);
     dispatch(loginUserFail(e));
   }
 };

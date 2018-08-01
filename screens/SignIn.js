@@ -9,34 +9,25 @@ import { Button } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
 import logo from '../assets/images/icon.png';
 import Colors from '../constants/Colors';
+import { DangerZone } from 'expo';
+import loading from '../assets/animations/loading.json';
+
+const { Lottie } = DangerZone;
 
 class SignIn extends Component {
   static navigationOptions = {
     header: null
   };
 
-  onEmailChange(text) {
-    this.props.emailChanged(text.toLowerCase());
-  }
-
-  onPasswordChange(text) {
-    this.props.passwordChanged(text);
-  }
-
-  onButtonPress = async () => {
-    await this.props.loginUser(this.props.auth.email, this.props.auth.password);
-    console.log(this.props);
-    if (this.props.auth.user != null) {
-      this.props.navigation.navigate('App');
-    }
+  state = {
+    animation: null,
+    button: null,
+    loader: null
   };
 
-  renderButton() {
-    if (this.props.auth.loading) {
-      return <Spinner size="large" />;
-    }
-
-    return (
+  componentWillMount() {
+    this._loadAnimation();
+    const button = (
       <View
         style={{
           flexDirection: 'column',
@@ -56,17 +47,83 @@ class SignIn extends Component {
         </Button>
       </View>
     );
+
+    this.setState({ button });
   }
+
+  onButtonPress = async () => {
+    const loader = (
+      <Lottie
+        ref={animation => {
+          this.animation = animation;
+        }}
+        style={{
+          width: '100%',
+          height: 150
+        }}
+        source={this.state.animation}
+        loop
+        speed={1.5}
+      />
+    );
+    await this.setState({ button: loader });
+    this.playAnimation();
+    await this.props.loginUser(this.props.auth.email, this.props.auth.password);
+    if (this.props.auth.user != null) {
+      this.props.navigation.navigate('App');
+    } else {
+      const button = (
+        <View
+          style={{
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+          <Button
+            text="Log In"
+            title="Log In"
+            buttonStyle={{
+              borderRadius: 10,
+              width: '100%',
+              backgroundColor: Colors.mediumBlue
+            }}
+            onPress={this.onButtonPress.bind(this)}>
+            Login
+          </Button>
+        </View>
+      );
+
+      this.setState({ button });
+    }
+  };
+
+  onEmailChange(text) {
+    this.props.emailChanged(text.toLowerCase());
+  }
+
+  onPasswordChange(text) {
+    this.props.passwordChanged(text);
+  }
+
+  _loadAnimation = () => {
+    this.setState({ animation: loading });
+  };
+
+  playAnimation = async () => {
+    if (!this.state.animation) {
+      this._loadAnimation();
+    } else if (this.animation) {
+      await this.animation.play();
+    }
+  };
 
   render() {
     return (
       <View style={[{ backgroundColor: 'white', height: '100%' }, s.aic, s.jcsb]}>
-        //image
         <View style={{ backgroundColor: 'red' }}>
           <Image style={[s.max_w5, s.max_h5]} source={logo} />
         </View>
         <KeyboardAvoidingView behavior="padding" enabled>
-          //email
           <View
             style={[
               {
@@ -88,7 +145,6 @@ class SignIn extends Component {
               />
             </View>
           </View>
-          //password
           <View
             style={[
               {
@@ -111,7 +167,7 @@ class SignIn extends Component {
             </View>
           </View>
           <Text style={styles.errorTextStyle}>{this.props.auth.error}</Text>
-          {this.renderButton()}
+          <View style={[s.aic]}>{this.state.button}</View>
         </KeyboardAvoidingView>
         <View style={[s.flx_row, s.mt4, s.mb3]}>
           <Text style={[s.blue, s.f6]}>Are you new here? </Text>
