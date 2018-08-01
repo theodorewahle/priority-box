@@ -35,3 +35,10 @@ export const postDecision = decision => {
       .catch(error => console.log(error));
   };
 };
+
+export const deleteDecision = key => {
+  firebase
+    .database()
+    .ref(`users/${firebase.auth().currentUser.uid}/decisions/${key}`)
+    .remove();
+};

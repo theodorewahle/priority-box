@@ -8,9 +8,11 @@ import {
   Modal,
   TouchableHighlight
 } from 'react-native';
+import { connect } from 'react-redux';
 import Colors from '../constants/Colors';
 import { styles as s } from 'react-native-style-tachyons';
 import { Button, Icon } from 'react-native-elements';
+import { deleteDecision } from '../redux/decisions/Api';
 
 class DecisionBubble extends React.Component {
   state = {
@@ -32,7 +34,7 @@ class DecisionBubble extends React.Component {
 
   render() {
     const { score, text, date } = this.props;
-
+    console.log(this.props);
     const styles = StyleSheet.create({
       gridItem: {
         margin: 5,
@@ -85,34 +87,42 @@ class DecisionBubble extends React.Component {
                     shadowRadius: 2
                   }
                 ]}>
-                <View style={[s.pv2]}>
+                <View style={[s.pa2]}>
                   <View style={[s.pv3]}>
-                    <View style={[s.flx_row]}>
-                      <View>
+                    <View style={[s.flx_row, s.jcsb]}>
+                      <View style={[s.max_w5]}>
                         <Text style={[s.f5]}>{this.formatDate(date)}</Text>
                         <Text style={[s.f3]}>{text}</Text>
                       </View>
-                      <Icon name="edit" type="material" onPress={() => console.log('yesh')} />
                     </View>
                     <View style={[s.mt3, s.pa1]}>
-                      {Object.keys(this.props.rows).map(key => (
-                        <View style={[s.flx_row, s.jcsb]}>
-                          <Text style={[s.f4, s.max_w5]}>
-                            {key.length > 18 ? `${key.slice(0, 16)}...` : key}
-                          </Text>
-                          <Text style={[s.f4, s.min_w2]}>{`${Math.round(this.props.rows[key] * 100)}%`}</Text>
+                      <View style={[s.flx_row, s.jcsb]}>
+                        <View>
+                          {Object.keys(this.props.rows).map((key, i) => (
+                            <Text key={i} style={[s.f4, s.max_w5]}>
+                              {key.length > 18 ? `${key.slice(0, 16)}...` : key}
+                            </Text>
+                          ))}
                         </View>
-                      ))}
+                        <View>
+                          {Object.keys(this.props.rows).map((key, i) => (
+                            <Text key={i} style={[s.f4, s.max_w5]}>
+                              {`${Math.round(this.props.rows[key] * 100)}%`}
+                            </Text>
+                          ))}
+                        </View>
+                      </View>
                     </View>
                   </View>
-                  <View>
+                  <View style={[s.flx_row]}>
                     <Button
                       title="Close"
                       onPress={() => {
                         this.setState({ open: !this.state.open });
                       }}
-                      buttonStyle={[s.br5, { backgroundColor: Colors.darkestBlue }]}
+                      buttonStyle={[s.br5, { backgroundColor: Colors.darkestBlue, minWidth: '100%' }]}
                     />
+                    <Icon name="delete" type="material" onPress={() => deleteDecision(1)} />
                   </View>
                 </View>
               </View>
@@ -124,4 +134,13 @@ class DecisionBubble extends React.Component {
   }
 }
 
-export default DecisionBubble;
+const mapStateToProps = ({ priorities }) => ({ priorities });
+
+const mapDispatchToProps = {
+  deleteDecision
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DecisionBubble);

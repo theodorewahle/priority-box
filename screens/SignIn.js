@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput as Input, Image } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput as Input, Image, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
 import { loginUser } from '../redux/auth/Api';
 import { emailChanged, passwordChanged } from '../redux/auth/Actions';
@@ -61,9 +61,12 @@ class SignIn extends Component {
   render() {
     return (
       <View style={[{ backgroundColor: 'white', height: '100%' }, s.aic, s.jcsb]}>
-        <View style={[s.aic]}>
-          <Image style={[{ height: 280, width: 280 }]} source={logo} />
-
+        //image
+        <View style={{ backgroundColor: 'red' }}>
+          <Image style={[s.max_w5, s.max_h5]} source={logo} />
+        </View>
+        <KeyboardAvoidingView behavior="padding" enabled>
+          //email
           <View
             style={[
               {
@@ -73,10 +76,9 @@ class SignIn extends Component {
                 shadowRadius: 2,
                 borderRadius: 3,
                 width: '100%'
-              },
-              s.mb1
+              }
             ]}>
-            <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph2, s.pv3]}>
+            <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph2, s.pv3, s.mb1]}>
               <Input
                 style={([s.h2, s.tac, s.f5], { textAlign: 'center', width: '100%' })}
                 label="Email"
@@ -86,6 +88,7 @@ class SignIn extends Component {
               />
             </View>
           </View>
+          //password
           <View
             style={[
               {
@@ -107,11 +110,9 @@ class SignIn extends Component {
               />
             </View>
           </View>
-
           <Text style={styles.errorTextStyle}>{this.props.auth.error}</Text>
-
           {this.renderButton()}
-        </View>
+        </KeyboardAvoidingView>
         <View style={[s.flx_row, s.mt4, s.mb3]}>
           <Text style={[s.blue, s.f6]}>Are you new here? </Text>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
