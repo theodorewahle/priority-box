@@ -69,7 +69,13 @@ class DecisionBubble extends React.Component {
           </Text>
         </TouchableOpacity>
         {this.state.open && (
-          <Modal animationType="slide" transparent visible={this.state.modalVisible}>
+          <Modal
+            animationType="slide"
+            onRequestClose={() => {
+              alert('Modal has been closed.');
+            }}
+            transparent
+            visible={this.state.modalVisible}>
             <View style={[s.aic, s.jcc]}>
               <View
                 style={[
@@ -83,7 +89,8 @@ class DecisionBubble extends React.Component {
                     shadowColor: '#000',
                     shadowOffset: { width: 0, height: 2 },
                     shadowOpacity: 0.3,
-                    shadowRadius: 2
+                    shadowRadius: 2,
+                    elevation: 1
                   }
                 ]}>
                 <View style={[s.pa2]}>

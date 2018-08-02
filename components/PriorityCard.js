@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, Platform } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
 import { deletePriority, getPriorities, updatePriorities } from '../redux/priorities/Api';
@@ -104,7 +104,10 @@ class PriorityCard extends React.Component {
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.3,
             shadowRadius: 2,
-            borderRadius: 3
+            borderRadius: 3,
+            elevation: 1,
+            marginLeft: Platform.OS === 'android' ? 20 : 0,
+            marginRight: Platform.OS === 'android' ? 20 : 0
           },
           s.mb1
         ]}>
@@ -112,7 +115,15 @@ class PriorityCard extends React.Component {
           onPress={() => {
             this.setState({ open: !this.state.open });
           }}>
-          <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.pv3, s.ph2]}>
+          <View
+            style={[
+              s.jcsb,
+              s.flx_row,
+              s.mh3,
+              { backgroundColor: Platform.OS === 'ios' ? 'white' : null },
+              s.pv3,
+              s.ph2
+            ]}>
             <Text style={[s.f3, s.black, s.pr2]}>{this.props.priority.text}</Text>
           </View>
         </TouchableWithoutFeedback>

@@ -62,7 +62,8 @@ class DecisionFormCard extends Component {
           shadowOffset: { width: 0, height: 2 },
           shadowOpacity: 0.3,
           shadowRadius: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          elevation: 1
         }}>
         {this.state.step === 1 && (
           <View style={[s.ph4, s.pv4, s.bg_white, s.br5]}>

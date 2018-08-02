@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, TextInput as Input, Image, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
-import { loginUser } from '../redux/auth/Api';
+import { signUpUser } from '../redux/auth/Api';
 import { emailChanged, passwordChanged } from '../redux/auth/Actions';
 
 import { Spinner } from '../components/common';
@@ -14,15 +14,17 @@ import loading from '../assets/animations/loading.json';
 
 const { Lottie } = DangerZone;
 
-class SignUp extends Component {
+class SignIn extends Component {
   static navigationOptions = {
     header: null
   };
 
   state = {
     animation: null,
-    button: null
+    button: null,
+    loader: null
   };
+
   componentWillMount() {
     this._loadAnimation();
     const button = (
@@ -33,8 +35,8 @@ class SignUp extends Component {
           alignItems: 'center'
         }}>
         <Button
-          text="Sign Up"
-          title="Sign Up"
+          text="Log In"
+          title="Log In"
           buttonStyle={{
             borderRadius: 10,
             width: '100%',
@@ -45,6 +47,7 @@ class SignUp extends Component {
         </Button>
       </View>
     );
+
     this.setState({ button });
   }
 
@@ -59,18 +62,38 @@ class SignUp extends Component {
           height: 150
         }}
         source={this.state.animation}
-        loop={true}
+        loop
         speed={1.5}
       />
     );
-    await this.setState({
-      button: loader
-    });
-
+    await this.setState({ button: loader });
     this.playAnimation();
-    await this.props.loginUser(this.props.auth.email, this.props.auth.password);
+    await this.props.signUpUser(this.props.auth.email, this.props.auth.password);
     if (this.props.auth.user != null) {
       this.props.navigation.navigate('App');
+    } else {
+      const button = (
+        <View
+          style={{
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+          <Button
+            text="Sign Up"
+            title="Sign Up"
+            buttonStyle={{
+              borderRadius: 10,
+              width: '100%',
+              backgroundColor: Colors.mediumBlue
+            }}
+            onPress={this.onButtonPress.bind(this)}>
+            Login
+          </Button>
+        </View>
+      );
+
+      this.setState({ button });
     }
   };
 
@@ -84,7 +107,6 @@ class SignUp extends Component {
 
   _loadAnimation = () => {
     this.setState({ animation: loading });
-    this.playAnimation();
   };
 
   playAnimation = async () => {
@@ -110,6 +132,7 @@ class SignUp extends Component {
                 shadowOpacity: 0.3,
                 shadowRadius: 2,
                 borderRadius: 3,
+                elevation: 1,
                 width: '100%'
               }
             ]}>
@@ -165,10 +188,10 @@ const mapStateToProps = ({ auth }) => ({ auth });
 const mapDispatchToProps = {
   emailChanged,
   passwordChanged,
-  loginUser
+  signUpUser
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignUp);
+)(SignIn);
