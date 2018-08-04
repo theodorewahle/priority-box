@@ -61,7 +61,14 @@ class PriorityCard extends React.Component {
   renderButtonPanel = () => {
     if (this.state.open) {
       return (
-        <View style={[s.jcsb, s.flx_row, { backgroundColor: Colors.smoke }, s.mh4, s.pa1]}>
+        <View
+          style={[
+            s.jcsb,
+            s.flx_row,
+            { backgroundColor: Platform.OS == 'ios' ? Colors.smoke : null },
+            s.mh4,
+            s.pa1
+          ]}>
           {this.props.priority.rank !== 1 &&
             this.props.priorityNumber > 1 && (
               <View style={[s.aic]}>

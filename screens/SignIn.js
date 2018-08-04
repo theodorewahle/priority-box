@@ -3,10 +3,12 @@ import {
   View,
   Text,
   TouchableOpacity,
-  TextInput as Input,
+  TextInput,
   Image,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  ScrollView,
+  StyleSheet
 } from 'react-native';
 import { connect } from 'react-redux';
 import { loginUser } from '../redux/auth/Api';
@@ -127,10 +129,10 @@ class SignIn extends Component {
   render() {
     return (
       <View style={[{ backgroundColor: 'white', height: '100%' }, s.aic]}>
-        <View>
-          <Image style={[s.max_w5, s.max_h5]} source={logo} />
+        <View style={[s.mt4, s.mb2]}>
+          <Image style={{ height: '50%', width: '50%' }} source={logo} />
         </View>
-        <KeyboardAvoidingView behavior="padding" enabled>
+        <KeyboardAvoidingView behavior="padding" style={styles.form}>
           <View style={styles.cardStyle}>
             <View
               style={[
@@ -138,7 +140,7 @@ class SignIn extends Component {
                 s.flx_row,
                 s.mh3,
                 s.ph2,
-                s.pv3,
+                s.pv1,
                 s.mb2,
                 {
                   marginLeft: Platform.OS === 'android' ? 20 : 0,
@@ -146,7 +148,7 @@ class SignIn extends Component {
                   backgroundColor: Platform.OS === 'ios' ? 'white' : null
                 }
               ]}>
-              <Input
+              <TextInput
                 style={[s.jcsb, s.flx_row, s.mh3, s.ph2, s.pv2, { width: '80%' }]}
                 label="Email"
                 placeholder="email"
@@ -170,13 +172,13 @@ class SignIn extends Component {
                   backgroundColor: Platform.OS === 'ios' ? 'white' : null
                 }
               ]}>
-              <Input
+              <TextInput
                 style={[
                   s.jcsb,
                   s.flx_row,
                   s.mh3,
                   s.ph2,
-                  s.pv2,
+                  s.pv1,
                   {
                     width: '80%'
                   }
@@ -191,6 +193,7 @@ class SignIn extends Component {
           <Text style={styles.errorTextStyle}>{this.props.auth.error}</Text>
           <View style={[s.aic]}>{this.state.button}</View>
         </KeyboardAvoidingView>
+
         <View style={[s.flx_row, s.mt5, s.mb3]}>
           <Text style={[s.blue, s.f6]}>Are you new here? </Text>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
@@ -202,7 +205,7 @@ class SignIn extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   errorTextStyle: {
     fontSize: 20,
     alignSelf: 'center',
@@ -214,10 +217,38 @@ const styles = {
     shadowOpacity: 0.3,
     shadowRadius: 2,
     borderRadius: 3,
-    elevation: 0.1,
     width: '100%'
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#ecf0f1'
+  },
+  header: {
+    paddingTop: 20,
+    padding: 20,
+    backgroundColor: '#336699'
+  },
+  description: {
+    fontSize: 14,
+    color: 'white'
+  },
+  input: {
+    margin: 20,
+    marginBottom: 0,
+    height: 34,
+    paddingHorizontal: 10,
+    borderRadius: 4,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    fontSize: 16
+  },
+  legal: {
+    margin: 10,
+    color: '#333',
+    fontSize: 12,
+    textAlign: 'center'
   }
-};
+});
 
 const mapStateToProps = ({ auth }) => ({ auth });
 
@@ -231,3 +262,7 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(SignIn);
+
+/*
+
+*/

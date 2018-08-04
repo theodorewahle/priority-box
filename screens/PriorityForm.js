@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableWithoutFeedback, Text, TextInput } from 'react-native';
+import { View, TouchableWithoutFeedback, Text, TextInput, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Header, Icon } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
@@ -67,11 +67,11 @@ class PriorityForm extends React.Component {
   render() {
     return (
       <View style={([s.mh1, s.br4], { backgroundColor: 'white', flex: 1 })}>
-        <View style={[s.aic, s.mt3]}>
+        <View style={[s.aic, s.mt3, { width: '100%' }]}>
           <Text style={[s.f5, s.mh3]}>{"What's your priority?"}</Text>
-          <View style={[s.br5, s.pa3, s.mb2]}>
+          <View style={[s.br5, s.pa3, s.mb2, { width: '100%' }]}>
             <TextInput
-              style={[s.f3]}
+              style={[s.f3, s.pa2, { width: '100%' }]}
               maxLength={40}
               multiline
               onChangeText={text => this.setState({ text })}
@@ -79,7 +79,7 @@ class PriorityForm extends React.Component {
             />
           </View>
         </View>
-        <View style={[s.aic, s.pr4]}>
+        <View style={[s.aic, Platform.OS == 'ios' ? s.pr4 : s.pr3]}>
           <TouchableWithoutFeedback style={[s.aic]} onPress={this.onButtonPress}>
             {this.state.animation && (
               <Lottie
