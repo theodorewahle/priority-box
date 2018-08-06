@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput as Input, Image, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TextInput, Image, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
 import { signUpUser } from '../redux/auth/Api';
 import { emailChanged, passwordChanged } from '../redux/auth/Actions';
 
-import { Spinner } from '../components/common';
 import { Button } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
 import logo from '../assets/images/icon.png';
@@ -35,15 +34,15 @@ class SignIn extends Component {
           alignItems: 'center'
         }}>
         <Button
-          text="Log In"
-          title="Log In"
+          text="Sign Up"
+          title="Sign Up"
           buttonStyle={{
             borderRadius: 10,
             width: '100%',
             backgroundColor: Colors.mediumBlue
           }}
           onPress={this.onButtonPress.bind(this)}>
-          Login
+          Sign Up
         </Button>
       </View>
     );
@@ -120,55 +119,35 @@ class SignIn extends Component {
   render() {
     return (
       <View style={[{ backgroundColor: 'white', height: '100%' }, s.aic, s.jcsb]}>
-        <View style={{ backgroundColor: 'red' }}>
+        <View>
           <Image style={[s.max_w5, s.max_h5]} source={logo} />
         </View>
         <KeyboardAvoidingView behavior="padding" enabled>
-          <View
-            style={[
-              {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.3,
-                shadowRadius: 2,
-                borderRadius: 3,
-                elevation: 1,
-                width: '100%'
-              }
-            ]}>
-            <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph2, s.pv3, s.mb1]}>
-              <Input
+          <View style={styles.shadowStyle}>
+            <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph3, s.pv3, s.mb1]}>
+              <TextInput
                 style={([s.h2, s.tac, s.f5], { textAlign: 'center', width: '100%' })}
                 label="Email"
+                underlineColorAndroid="rgba(0,0,0,0)"
                 placeholder="email"
                 onChangeText={this.onEmailChange.bind(this)}
                 value={this.props.auth.email}
               />
             </View>
           </View>
-          <View
-            style={[
-              {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.3,
-                shadowRadius: 2,
-                borderRadius: 3,
-                width: '100%'
-              },
-              s.mb1
-            ]}>
+          <View style={[styles.shadowStyle, s.mb1]}>
             <View style={[s.jcsb, s.flx_row, s.mh3, s.bg_white, s.ph2, s.pv3]}>
-              <Input
+              <TextInput
                 style={([s.h2, s.tac, s.f5], { textAlign: 'center', width: '100%' })}
                 placeholder="password"
+                underlineColorAndroid="rgba(0,0,0,0)"
                 onChangeText={this.onPasswordChange.bind(this)}
                 value={this.props.auth.password}
               />
             </View>
           </View>
           <Text style={styles.errorTextStyle}>{this.props.auth.error}</Text>
-          <View style={[s.aic]}>{this.state.button}</View>
+          <View style={[s.aic, s.mb5]}>{this.state.button}</View>
         </KeyboardAvoidingView>
       </View>
     );
@@ -180,6 +159,14 @@ const styles = {
     fontSize: 20,
     alignSelf: 'center',
     color: 'red'
+  },
+  shadowStyle: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    borderRadius: 3,
+    width: '100%'
   }
 };
 

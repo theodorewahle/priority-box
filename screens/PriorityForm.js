@@ -71,9 +71,10 @@ class PriorityForm extends React.Component {
           <Text style={[s.f5, s.mh3]}>{"What's your priority?"}</Text>
           <View style={[s.br5, s.pa3, s.mb2, { width: '100%' }]}>
             <TextInput
-              style={[s.f3, s.pa2, { width: '100%' }]}
+              style={[s.f3, s.pa2, { width: '100%', textAlign: 'center' }]}
               maxLength={40}
               multiline
+              underlineColorAndroid="rgba(0,0,0,0)"
               onChangeText={text => this.setState({ text })}
               placeholder={`${'"Run a marathon"'}`}
             />

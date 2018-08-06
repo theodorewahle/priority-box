@@ -15,6 +15,6 @@ export const orderPriorities = priorities => {
 
 export const orderDecisions = decisions => {
   const mappedDecisions = Object.keys(decisions).map(key => ({ key, decision: decisions[key] }));
-  const list = _.sortBy(mappedDecisions, decision => decision.score);
+  const list = _.sortBy(mappedDecisions, decision => decision.decision.score);
   return list.reverse();
 };

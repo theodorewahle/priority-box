@@ -93,9 +93,9 @@ class DecisionFormCard extends Component {
           <View
             style={[
               s.pa3,
-              s.ma10,
               s.br5,
               s.aic,
+              s.mh3,
               { backgroundColor: 'white', elevation: 1, width: Platform.OS === 'android' ? '100%' : null }
             ]}>
             <View style={[s.br5, s.pa2]}>
@@ -119,15 +119,16 @@ class DecisionFormCard extends Component {
                 return (
                   <View
                     key={id}
-                    style={{
-                      paddingTop: 2,
-                      paddingBottom: 2,
-                      paddingLeft: 5,
-                      paddingRight: 5,
-                      borderRadius: 10,
-                      marginBottom: 5,
-                      backgroundColor: this.chooseColor(priorityColors, id)
-                    }}>
+                    style={[
+                      s.pv1,
+                      s.ph1,
+                      s.mb1,
+                      s.min_w5,
+                      {
+                        backgroundColor: this.chooseColor(priorityColors, id),
+                        borderRadius: 10
+                      }
+                    ]}>
                     <Text style={[s.black]}>{priority.text}</Text>
                     <Slider
                       style={{ height: 35 }}
