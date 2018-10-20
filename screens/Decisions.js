@@ -44,7 +44,7 @@ class Decisions extends Component {
 
   getDataSource = () => {
     if (!this.props.decisions) {
-      return this.state.ds.cloneWithRows(['dataSource']);
+      return this.state.ds.cloneWithRows([ 'dataSource']);
     }
     const dataSource = orderDecisions(this.props.decisions);
     return this.state.ds.cloneWithRows(dataSource);
