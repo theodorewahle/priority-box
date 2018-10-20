@@ -1,9 +1,9 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import ReduxThunk from 'redux-thunk';
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import ReduxThunk from "redux-thunk";
 
-import authReducer from './redux/auth/Reducer.js';
-import prioritiesReducer from './redux/priorities/Reducer.js';
-import decisionsReducer from './redux/decisions/Reducer.js';
+import authReducer from "./redux/auth/Reducer.js";
+import prioritiesReducer from "./redux/priorities/Reducer.js";
+import decisionsReducer from "./redux/decisions/Reducer.js";
 
 const reducers = combineReducers({
   auth: authReducer,

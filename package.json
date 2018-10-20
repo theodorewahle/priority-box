@@ -33,7 +33,7 @@
     "eslint-config-rallycoding": "^3.2.0",
     "eslint-config-universe": "^1.0.7",
     "eslint-plugin-react": "^7.10.0",
-    "husky": "^0.14.3",
+    "husky": "^1.1.2",
     "jest-expo": "^28.0.0",
     "prettier": "1.13.7",
     "redux-logger": "^3.0.6"
