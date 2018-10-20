@@ -1,6 +1,6 @@
-import firebase from 'firebase';
+import firebase from "firebase";
 
-import { GET_PRIORITIES_SUCCESS, POST_PRIORITY_SUCCESS } from './Actions';
+import { GET_PRIORITIES_SUCCESS, POST_PRIORITY_SUCCESS } from "./Actions";
 
 export const getPriorities = () => {
   const { currentUser } = firebase.auth();
@@ -8,9 +8,9 @@ export const getPriorities = () => {
     firebase
       .database()
       .ref(`users/${currentUser.uid}/priorities`)
-      .orderByChild('rank')
+      .orderByChild("rank")
       .on(
-        'value',
+        "value",
         snapshot => {
           if (snapshot.val()) {
             dispatch({ type: GET_PRIORITIES_SUCCESS, payload: snapshot.val() });

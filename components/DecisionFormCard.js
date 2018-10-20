@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import { View, Text, TextInput, Platform } from 'react-native';
-import { connect } from 'react-redux';
-import { Slider, Button } from 'react-native-elements';
-import { styles as s } from 'react-native-style-tachyons';
-import { postDecision } from '../redux/decisions/Api';
-import CalculateDecisionScore from '../utils/CalculateDecisionScore';
-import { orderPriorities } from '../utils';
-import Colors from '../constants/Colors';
+import React, { Component } from "react";
+import { View, Text, TextInput, Platform } from "react-native";
+import { connect } from "react-redux";
+import { Slider, Button } from "react-native-elements";
+import { styles as s } from "react-native-style-tachyons";
+import { postDecision } from "../redux/decisions/Api";
+import CalculateDecisionScore from "../utils/CalculateDecisionScore";
+import { orderPriorities } from "../utils";
+import Colors from "../constants/Colors";
 
 class DecisionFormCard extends Component {
   state = {
     value: 0.5,
     step: 1,
     priorityColors: {},
-    name: ''
+    name: ""
   };
 
   handleSubmit = async sliderValues => {
@@ -21,12 +21,19 @@ class DecisionFormCard extends Component {
     this.props.onClose();
     const score = await CalculateDecisionScore(sliderValues, priorities);
     const subScores = {};
-    const keys = Object.keys(priorities).filter(key => priorities[key].rank <= 7);
+    const keys = Object.keys(priorities).filter(
+      key => priorities[key].rank <= 7
+    );
     keys.map(priorityKey => {
       const { text, rank } = priorities[priorityKey];
       subScores[text] = sliderValues[rank] ? sliderValues[rank].value : 0.5;
     });
-    const decisionResults = { score, subScores, name: this.state.name, date: new Date().toString() };
+    const decisionResults = {
+      score,
+      subScores,
+      name: this.state.name,
+      date: new Date().toString()
+    };
     if (score) {
       await this.props.postDecision(decisionResults);
     }
@@ -43,11 +50,11 @@ class DecisionFormCard extends Component {
   chooseColor = (priorityColors, id) => {
     if (priorityColors[id]) {
       if (priorityColors[id].r < 145 && priorityColors[id].g < 145) {
-        return 'grey';
+        return "grey";
       }
       return `rgb(${priorityColors[id].r}, ${priorityColors[id].g}, 0)`;
     }
-    return 'grey';
+    return "grey";
   };
 
   render() {
@@ -55,16 +62,17 @@ class DecisionFormCard extends Component {
       <View
         style={{
           flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          shadowColor: '#000',
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          shadowColor: "#000",
           shadowOffset: { width: 0, height: 2 },
           shadowOpacity: 0.3,
           shadowRadius: 2,
           borderRadius: 3,
           elevation: 1
-        }}>
+        }}
+      >
         {this.state.step === 1 && (
           <View style={[s.ph4, s.pv4, s.bg_white, s.br5, { elevation: 1 }]}>
             <View style={[s.br5, s.pa2]}>
@@ -72,7 +80,7 @@ class DecisionFormCard extends Component {
             </View>
             <View style={[s.br5, s.pa3, s.mb2]}>
               <TextInput
-                style={[Platform.OS == 'android' ? s.pa3 : null]}
+                style={[Platform.OS == "android" ? s.pa3 : null]}
                 onChangeText={name => this.setState({ name })}
                 placeholder={`${'"Get a gym membership"'}`}
                 maxLength={35}
@@ -96,14 +104,23 @@ class DecisionFormCard extends Component {
               s.br5,
               s.aic,
               s.mh3,
-              { backgroundColor: 'white', elevation: 1, width: Platform.OS === 'android' ? '100%' : null }
-            ]}>
+              {
+                backgroundColor: "white",
+                elevation: 1,
+                width: Platform.OS === "android" ? "100%" : null
+              }
+            ]}
+          >
             <View style={[s.br5, s.pa2]}>
               {Object.keys(this.props.priorities).length < 7 && (
-                <Text style={[s.f8]}>How does this decision affect your priorities?</Text>
+                <Text style={[s.f8]}>
+                  How does this decision affect your priorities?
+                </Text>
               )}
               {Object.keys(this.props.priorities).length > 7 && (
-                <Text style={[s.f8]}>How does this decision affect your top priorities?</Text>
+                <Text style={[s.f8]}>
+                  How does this decision affect your top priorities?
+                </Text>
               )}
               <Text style={[s.f3, s.asc, s.mv2]}>{this.state.name}</Text>
               <View style={[s.jcsb, s.flx_row]}>
@@ -128,13 +145,18 @@ class DecisionFormCard extends Component {
                         backgroundColor: this.chooseColor(priorityColors, id),
                         borderRadius: 10
                       }
-                    ]}>
+                    ]}
+                  >
                     <Text style={[s.black]}>{priority.text}</Text>
                     <Slider
                       style={{ height: 35 }}
                       animationType="timing"
                       thumbTintColor="black"
-                      value={priorityColors[id] ? priorityColors[id].value : this.state.value}
+                      value={
+                        priorityColors[id]
+                          ? priorityColors[id].value
+                          : this.state.value
+                      }
                       onValueChange={value => this.sliderMove(value, id)}
                     />
                   </View>
@@ -144,7 +166,7 @@ class DecisionFormCard extends Component {
             <Button
               title="Weigh Decision"
               buttonStyle={{
-                borderRadius: 10 ,
+                borderRadius: 10,
                 backgroundColor: Colors.mediumBlue
               }}
               onPress={() => this.handleSubmit(this.state.priorityColors)}
@@ -156,7 +178,10 @@ class DecisionFormCard extends Component {
   }
 }
 
-const mapStateToProps = ({ priorities, decisions }) => ({ priorities, decisions });
+const mapStateToProps = ({ priorities, decisions }) => ({
+  priorities,
+  decisions
+});
 
 const mapDispatchToProps = {
   postDecision

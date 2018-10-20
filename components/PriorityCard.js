@@ -1,10 +1,14 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { View, Text, TouchableWithoutFeedback, Platform } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
-import { styles as s } from 'react-native-style-tachyons';
-import { deletePriority, getPriorities, updatePriorities } from '../redux/priorities/Api';
-import Colors from '../constants/Colors';
+import React from "react";
+import { connect } from "react-redux";
+import { View, Text, TouchableWithoutFeedback, Platform } from "react-native";
+import { Button, Icon } from "react-native-elements";
+import { styles as s } from "react-native-style-tachyons";
+import {
+  deletePriority,
+  getPriorities,
+  updatePriorities
+} from "../redux/priorities/Api";
+import Colors from "../constants/Colors";
 
 class PriorityCard extends React.Component {
   state = {
@@ -45,7 +49,9 @@ class PriorityCard extends React.Component {
 
   handleDelete = async () => {
     const { priorities, priority } = this.props;
-    const delKey = Object.keys(priorities).filter(key => priorities[key].rank === priority.rank); // should be key of obj with rank 3
+    const delKey = Object.keys(priorities).filter(
+      key => priorities[key].rank === priority.rank
+    ); // should be key of obj with rank 3
     await deletePriority(delKey); // delete the key
     const newObject = Object.assign({}, priorities); //sould be the objecy
     delete newObject[delKey];
@@ -65,16 +71,22 @@ class PriorityCard extends React.Component {
           style={[
             s.jcsb,
             s.flx_row,
-            { backgroundColor: Platform.OS == 'ios' ? Colors.smoke : null },
+            { backgroundColor: Platform.OS == "ios" ? Colors.smoke : null },
             s.mh4,
             s.pa1
-          ]}>
+          ]}
+        >
           {this.props.priority.rank !== 1 &&
             this.props.priorityNumber > 1 && (
               <View style={[s.aic]}>
                 <Button
-                  icon={{ name: 'arrow-upward' }}
-                  buttonStyle={[{ backgroundColor: Colors.darkestBlue }, s.br5, s.pl3, s.pr2]}
+                  icon={{ name: "arrow-upward" }}
+                  buttonStyle={[
+                    { backgroundColor: Colors.darkestBlue },
+                    s.br5,
+                    s.pl3,
+                    s.pr2
+                  ]}
                   onPress={this.handleMoveUp}
                 />
               </View>
@@ -82,7 +94,7 @@ class PriorityCard extends React.Component {
           <View style={[s.aic]}>
             <Button
               title="delete"
-              buttonStyle={[{ backgroundColor: 'red' }, s.br5, s.pl3, s.pr3]}
+              buttonStyle={[{ backgroundColor: "red" }, s.br5, s.pl3, s.pr3]}
               onPress={this.handleDelete}
             />
           </View>
@@ -90,8 +102,13 @@ class PriorityCard extends React.Component {
             <View style={[s.aic]}>
               {this.props.key !== this.props.priorityNumber && (
                 <Button
-                  icon={{ name: 'arrow-downward' }}
-                  buttonStyle={[{ backgroundColor: Colors.darkestBlue }, s.br5, s.pl3, s.pr2]}
+                  icon={{ name: "arrow-downward" }}
+                  buttonStyle={[
+                    { backgroundColor: Colors.darkestBlue },
+                    s.br5,
+                    s.pl3,
+                    s.pr2
+                  ]}
                   onPress={this.handleMoveDown}
                 />
               )}
@@ -107,31 +124,36 @@ class PriorityCard extends React.Component {
       <View
         style={[
           {
-            shadowColor: '#000',
+            shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.3,
             shadowRadius: 2,
             borderRadius: 3,
             elevation: 1,
-            marginLeft: Platform.OS === 'android' ? 20 : 0,
-            marginRight: Platform.OS === 'android' ? 20 : 0
+            marginLeft: Platform.OS === "android" ? 20 : 0,
+            marginRight: Platform.OS === "android" ? 20 : 0
           },
           s.mb1
-        ]}>
+        ]}
+      >
         <TouchableWithoutFeedback
           onPress={() => {
-            this.setState({open: !this.state.open });
-          }}>
+            this.setState({ open: !this.state.open });
+          }}
+        >
           <View
             style={[
               s.jcsb,
               s.flx_row,
               s.mh3,
-              { backgroundColor: Platform.OS === 'ios' ? 'white' : null },
+              { backgroundColor: Platform.OS === "ios" ? "white" : null },
               s.pv3,
               s.ph2
-            ]}>
-            <Text style={[s.f3, s.black, s.pr2]}>{this.props.priority.text}</Text>
+            ]}
+          >
+            <Text style={[s.f3, s.black, s.pr2]}>
+              {this.props.priority.text}
+            </Text>
           </View>
         </TouchableWithoutFeedback>
 
