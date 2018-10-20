@@ -120,7 +120,7 @@ class PriorityCard extends React.Component {
         ]}>
         <TouchableWithoutFeedback
           onPress={() => {
-            this.setState({ open: !this.state.open });
+            this.setState({open: !this.state.open });
           }}>
           <View
             style={[

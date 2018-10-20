@@ -12,7 +12,7 @@ import Colors from '../constants/Colors';
 import { orderDecisions } from '../utils';
 
 class Decisions extends Component {
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = () => {
     return {
       title: 'Home',
       header: (
@@ -80,9 +80,7 @@ class Decisions extends Component {
           animationType="slide"
           transparent
           visible={this.state.composing}
-          onRequestClose={() => {
-            alert('Modal has been closed.');
-          }}>
+        >
           <DecisionFormCard onClose={() => this.setState({ composing: false })} />
         </Modal>
       </ScrollView>

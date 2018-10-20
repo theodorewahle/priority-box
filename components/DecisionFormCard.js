@@ -144,7 +144,7 @@ class DecisionFormCard extends Component {
             <Button
               title="Weigh Decision"
               buttonStyle={{
-                borderRadius: 10,
+                borderRadius: 10 ,
                 backgroundColor: Colors.mediumBlue
               }}
               onPress={() => this.handleSubmit(this.state.priorityColors)}

@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 
-import { GET_PRIORITIES_SUCCESS, POST_PRIORITY_SUCCESS, DELETE_PRIORITY_SUCCESS } from './Actions';
+import { GET_PRIORITIES_SUCCESS, POST_PRIORITY_SUCCESS } from './Actions';
 
 export const getPriorities = () => {
   const { currentUser } = firebase.auth();

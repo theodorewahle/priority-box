@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Image, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
-import { loginUser } from '../redux/auth/Api';
-import { emailChanged, passwordChanged } from '../redux/auth/Actions';
-
+import { DangerZone } from 'expo';
 import { Button } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
+import { loginUser } from '../redux/auth/Api';
+import { emailChanged, passwordChanged } from '../redux/auth/Actions';
 import logo from '../assets/images/icon.png';
 import Colors from '../constants/Colors';
-import { DangerZone } from 'expo';
 import loading from '../assets/animations/loading.json';
 
 const { Lottie } = DangerZone;

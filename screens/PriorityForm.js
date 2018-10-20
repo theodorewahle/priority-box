@@ -3,10 +3,10 @@ import { View, TouchableWithoutFeedback, Text, TextInput, Platform } from 'react
 import { connect } from 'react-redux';
 import { Header, Icon } from 'react-native-elements';
 import { styles as s } from 'react-native-style-tachyons';
+import { DangerZone } from 'expo';
 import Colors from '../constants/Colors';
 import { postPriority } from '../redux/priorities/Api';
 import submitButton from '../assets/animations/submit_button.json';
-import { DangerZone } from 'expo';
 
 const { Lottie } = DangerZone;
 
@@ -39,14 +39,6 @@ class PriorityForm extends React.Component {
     this._loadAnimation();
   }
 
-  playAnimation = async () => {
-    if (!this.state.animation) {
-      this._loadAnimation();
-    } else if (this.animation) {
-      await this.animation.play();
-    }
-  };
-
   onButtonPress = async () => {
     this.playAnimation();
     this.setState({ tapped: this.state.tapped + 500 });
@@ -62,6 +54,14 @@ class PriorityForm extends React.Component {
       this.props.navigation.navigate('Home');
       this.setState({ tapped: -500 });
     }, 2800);
+  };
+
+  playAnimation = async () => {
+    if (!this.state.animation) {
+      this._loadAnimation();
+    } else if (this.animation) {
+      await this.animation.play();
+    }
   };
 
   render() {
@@ -80,7 +80,7 @@ class PriorityForm extends React.Component {
             />
           </View>
         </View>
-        <View style={[s.aic, Platform.OS == 'ios' ? s.pr4 : s.pr3]}>
+        <View style={[s.aic, Platform.OS === 'ios' ? s.pr4 : s.pr3]}>
           <TouchableWithoutFeedback style={[s.aic]} onPress={this.onButtonPress}>
             {this.state.animation && (
               <Lottie

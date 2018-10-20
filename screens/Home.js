@@ -42,7 +42,7 @@ class Home extends React.Component {
           {orderPriorities(this.props.priorities).map(priority => (
             <PriorityCard
               key={priority.rank}
-              priority={priority}
+              priority={priority }
               priorityNumber={Object.keys(this.props.priorities).length}
             />
           ))}

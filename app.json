@@ -19,7 +19,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.theodorewahle.prioritybox"
+    },
+    "android": {
+      "package": "com.theodorewahle.prioritybox"
     }
   }
 }

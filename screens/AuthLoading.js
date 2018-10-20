@@ -3,7 +3,7 @@ import { ActivityIndicator, AsyncStorage, Button, StatusBar, StyleSheet, View } 
 
 export default class AuthLoading extends React.Component {
   constructor() {
-    super();
+    super()
     this._bootstrapAsync();
   }
 

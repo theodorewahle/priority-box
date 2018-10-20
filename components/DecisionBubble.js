@@ -61,7 +61,7 @@ class DecisionBubble extends React.Component {
     return (
       <View>
         <TouchableOpacity style={styles.gridItem} onPress={() => this.setState({ open: !this.state.open })}>
-          <View style={styles.gridItemImage}>
+          <View style={ styles.gridItemImage}>
             <Text style={{ fontSize: 25 }}>{Math.round(score * 100)}%</Text>
           </View>
           <Text style={styles.gridItemText}>
